@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Planner — Etsy Listing Images</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@300;400;500;600&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F7F3EE; --cream:#FBF8F4; --beige:#EAE1D5; --sand:#E3D8C8;
+    --taupe:#C9BBA8; --brown:#8C7B6A; --mauve:#C6A9A2; --ink:#3B342C; --line:#D8CFC2;
+    --serif:'Cormorant Garamond',serif; --sans:'Montserrat',sans-serif; --script:'Sacramento',cursive;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#ccc;}
+  .limg{position:relative;width:2000px;height:2000px;background:var(--ivory);color:var(--ink);overflow:hidden;margin:0 auto 30px;}
+  .lframe{position:absolute;top:70px;left:70px;right:70px;bottom:70px;border:2px solid var(--taupe);}
+  .ico{stroke:var(--brown);stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .badge{display:inline-block;border:2px solid var(--taupe);border-radius:60px;padding:16px 44px;font-family:var(--sans);font-weight:500;font-size:26px;letter-spacing:5px;color:var(--brown);text-transform:uppercase;}
+  .kick{font-family:var(--sans);font-weight:400;font-size:30px;letter-spacing:14px;color:var(--brown);text-transform:uppercase;}
+  .h-serif{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:3px;line-height:1.02;}
+  .script{font-family:var(--script);color:var(--mauve);line-height:1;}
+  .sub{font-family:var(--sans);font-weight:300;color:var(--brown);letter-spacing:3px;text-transform:uppercase;}
+  /* page slot (drop your planner page here) */
+  .slot{position:relative;background:var(--cream);border:2px solid var(--taupe);border-radius:14px;display:flex;align-items:center;justify-content:center;}
+  .slot .sh{position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;background:var(--beige);border-radius:14px;z-index:-1;}
+  .slotlabel{text-align:center;color:var(--brown);font-family:var(--sans);font-weight:400;font-size:24px;letter-spacing:3px;text-transform:uppercase;}
+  .feat{display:flex;align-items:flex-start;gap:26px;font-family:var(--sans);font-weight:300;font-size:34px;color:var(--ink);}
+  .feat b{font-weight:600;}
+  .center{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .wm{font-family:var(--sans);font-weight:300;font-size:24px;letter-spacing:6px;color:var(--taupe);text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<!-- ============ 1 · HERO / MAIN ============ -->
+<div class="limg" data-document-role="page" data-label="01 Hero Main">
+  <div class="lframe"></div>
+  <div class="center">
+    <div class="kick" style="margin-bottom:30px;">The Small Business</div>
+    <div class="h-serif" style="font-size:150px;">BUSINESS<br>PLANNER</div>
+    <div style="display:flex;align-items:center;gap:30px;margin:36px 0 44px;">
+      <span style="width:120px;height:2px;background:var(--brown);"></span>
+      <span class="script" style="font-size:88px;">50 editable pages</span>
+      <span style="width:120px;height:2px;background:var(--brown);"></span>
+    </div>
+    <div class="slot" style="width:520px;height:735px;margin-bottom:50px;"><div class="sh"></div><div class="slotlabel"><svg class="ico" style="width:66px;height:66px;" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg><div style="margin-top:16px;">drop cover<br>page here</div></div></div>
+    <div style="display:flex;gap:26px;"><span class="badge">Canva</span><span class="badge">A4 &amp; US Letter</span><span class="badge">Printable</span></div>
+  </div>
+</div>
+
+<!-- ============ 2 · WHAT'S INCLUDED (grid) ============ -->
+<div class="limg" data-document-role="page" data-label="02 Whats Included">
+  <div style="position:absolute;top:120px;left:0;right:0;text-align:center;">
+    <div class="kick" style="font-size:26px;letter-spacing:12px;">What's Included</div>
+    <div class="h-serif" style="font-size:96px;margin-top:14px;">50 <span class="script" style="font-size:96px;color:var(--mauve);">beautiful</span> Pages</div>
+  </div>
+  <div style="position:absolute;top:400px;left:130px;right:130px;bottom:150px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:40px;">
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;bottom:70px;left:0;right:0;text-align:center;" class="sub">7 sections &middot; goals &middot; brand &middot; products &middot; clients &middot; marketing &middot; finance &middot; planning</div>
+</div>
+
+<!-- ============ 3 · 50 PAGES ============ -->
+<div class="limg" data-document-role="page" data-label="03 Fifty Pages">
+  <div class="lframe" style="border-color:var(--mauve);opacity:.4;"></div>
+  <div style="position:absolute;top:210px;left:0;right:0;text-align:center;">
+    <div class="h-serif" style="font-size:340px;color:var(--mauve);line-height:.9;">50</div>
+    <div class="sub" style="font-size:38px;letter-spacing:16px;margin-top:10px;">editable pages</div>
+  </div>
+  <div style="position:absolute;bottom:300px;left:180px;right:180px;display:flex;justify-content:space-between;align-items:flex-end;">
+    <div class="slot" style="width:300px;height:424px;transform:rotate(-6deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:340px;height:480px;"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:300px;height:424px;transform:rotate(6deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;bottom:150px;left:0;right:0;text-align:center;" class="script"><span style="font-size:70px;">everything to run your business</span></div>
+</div>
+
+<!-- ============ 4 · FOUNDATION & BRAND ============ -->
+<div class="limg" data-document-role="page" data-label="04 Foundation Brand">
+  <div style="position:absolute;top:130px;left:130px;right:130px;">
+    <div class="kick" style="font-size:24px;letter-spacing:10px;">Sections 01 &amp; 02</div>
+    <div class="h-serif" style="font-size:100px;margin-top:12px;">Foundation <span class="script" style="font-size:90px;">&amp; brand</span></div>
+  </div>
+  <div style="position:absolute;top:400px;left:130px;width:900px;display:flex;flex-direction:column;gap:44px;">
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><div>Business overview, <b>vision &amp; mission</b></div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M12 2l3 6 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.1 20.6l1.1-6.5L2.5 8.9 9 8z"/></svg><div>Annual &amp; <b>quarterly goals</b> + action plan</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c1.5 0 2-1 2-2s-.5-1.5-.5-2.5S14 12 16 12h3a2 2 0 002-2 8 8 0 00-9-7z"/></svg><div>Brand strategy, <b>colour &amp; type</b> planners</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 5"/></svg><div>Brand vision board &amp; <b>voice</b></div></div>
+  </div>
+  <div style="position:absolute;top:440px;right:150px;display:flex;gap:30px;">
+    <div class="slot" style="width:340px;height:480px;transform:rotate(-4deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:340px;height:480px;transform:rotate(4deg);margin-top:120px;"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;bottom:120px;left:130px;right:130px;text-align:center;" class="sub">warm, minimal &amp; fully editable in Canva</div>
+</div>
+
+<!-- ============ 5 · PRODUCTS & CUSTOMERS ============ -->
+<div class="limg" data-document-role="page" data-label="05 Products Customers">
+  <div style="position:absolute;top:130px;left:130px;right:130px;text-align:right;">
+    <div class="kick" style="font-size:24px;letter-spacing:10px;">Sections 03 &amp; 04</div>
+    <div class="h-serif" style="font-size:100px;margin-top:12px;">Products <span class="script" style="font-size:90px;">&amp; clients</span></div>
+  </div>
+  <div style="position:absolute;top:440px;left:150px;display:flex;gap:30px;">
+    <div class="slot" style="width:340px;height:480px;transform:rotate(-4deg);margin-top:120px;"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:340px;height:480px;transform:rotate(4deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;top:420px;right:130px;width:880px;display:flex;flex-direction:column;gap:44px;text-align:left;">
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5z"/><path d="M3 8v8l9 5 9-5V8"/></svg><div>Product planner, <b>development</b> &amp; evaluation</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M7 7h.01M4 4h7l9 9-7 7-9-9z"/></svg><div><b>Pricing</b>, inventory &amp; reorder trackers</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5 7-5s7 1.5 7 5"/><circle cx="17.5" cy="9" r="2.5"/></svg><div>Ideal customer, <b>research</b> &amp; contacts</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7H3V5h11"/></svg><div>Client meeting &amp; <b>project trackers</b></div></div>
+  </div>
+  <div style="position:absolute;bottom:120px;left:130px;right:130px;text-align:center;" class="sub">organise every product, order &amp; client</div>
+</div>
+
+<!-- ============ 6 · MARKETING ============ -->
+<div class="limg" data-document-role="page" data-label="06 Marketing">
+  <div style="position:absolute;top:130px;left:0;right:0;text-align:center;">
+    <div class="kick" style="font-size:24px;letter-spacing:10px;">Section 05</div>
+    <div class="h-serif" style="font-size:110px;margin-top:12px;">Marketing <span class="script" style="font-size:100px;">made simple</span></div>
+  </div>
+  <div style="position:absolute;top:470px;left:150px;right:150px;display:flex;justify-content:center;gap:36px;">
+    <div class="slot" style="width:330px;height:466px;transform:rotate(-7deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:360px;height:508px;"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:330px;height:466px;transform:rotate(7deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;bottom:220px;left:200px;right:200px;display:grid;grid-template-columns:1fr 1fr;gap:34px 70px;">
+    <div class="feat" style="font-size:32px;"><svg class="ico" style="width:40px;height:40px;flex:none;margin-top:2px;" viewBox="0 0 24 24"><path d="M4 21h16M6 21V8M18 21V8M4 8h16L12 3z"/></svg><div>Content pillars</div></div>
+    <div class="feat" style="font-size:32px;"><svg class="ico" style="width:40px;height:40px;flex:none;margin-top:2px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><div>Content planner</div></div>
+    <div class="feat" style="font-size:32px;"><svg class="ico" style="width:40px;height:40px;flex:none;margin-top:2px;" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 11l8-4M8 13l8 4"/></svg><div>Social media planner</div></div>
+    <div class="feat" style="font-size:32px;"><svg class="ico" style="width:40px;height:40px;flex:none;margin-top:2px;" viewBox="0 0 24 24"><path d="M3 11l14-6v14L3 13z"/><path d="M17 8a3 3 0 010 8"/></svg><div>Campaigns &amp; keywords</div></div>
+  </div>
+  <div style="position:absolute;bottom:110px;left:0;right:0;text-align:center;" class="sub">show up consistently &amp; on brand</div>
+</div>
+
+<!-- ============ 7 · FINANCE & PLANNING ============ -->
+<div class="limg" data-document-role="page" data-label="07 Finance Planning">
+  <div style="position:absolute;top:130px;left:130px;right:130px;">
+    <div class="kick" style="font-size:24px;letter-spacing:10px;">Sections 06 &amp; 07</div>
+    <div class="h-serif" style="font-size:100px;margin-top:12px;">Finance <span class="script" style="font-size:90px;">&amp; planning</span></div>
+  </div>
+  <div style="position:absolute;top:420px;left:130px;width:900px;display:flex;flex-direction:column;gap:44px;">
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M4 15l5-5 4 3 6-7"/></svg><div>Monthly revenue &amp; <b>expense trackers</b></div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><path d="M3 20h18M6 20V10M11 20V5M16 20v-8M21 20V8"/></svg><div>Annual <b>profit tracker</b> with chart</div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><div>Supplier, order &amp; <b>tax trackers</b></div></div>
+    <div class="feat"><svg class="ico" style="width:46px;height:46px;flex:none;margin-top:4px;" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg><div>Monthly, weekly &amp; <b>notes</b> pages</div></div>
+  </div>
+  <div style="position:absolute;top:440px;right:150px;display:flex;gap:30px;">
+    <div class="slot" style="width:340px;height:480px;transform:rotate(4deg);"><div class="slotlabel" style="font-size:20px;">page</div></div>
+    <div class="slot" style="width:340px;height:480px;transform:rotate(-4deg);margin-top:120px;"><div class="slotlabel" style="font-size:20px;">page</div></div>
+  </div>
+  <div style="position:absolute;bottom:120px;left:130px;right:130px;text-align:center;" class="sub">know your numbers, plan your months</div>
+</div>
+
+<!-- ============ 8 · 100% EDITABLE ============ -->
+<div class="limg" data-document-role="page" data-label="08 Editable Features">
+  <div class="lframe"></div>
+  <div style="position:absolute;top:170px;left:0;right:0;text-align:center;">
+    <div class="script" style="font-size:96px;">100% editable</div>
+    <div class="h-serif" style="font-size:80px;margin-top:6px;">IN CANVA &mdash; FREE</div>
+  </div>
+  <div style="position:absolute;top:520px;left:230px;right:230px;display:grid;grid-template-columns:1fr 1fr;gap:70px 90px;">
+    <div style="text-align:center;"><svg class="ico" style="width:80px;height:80px;" viewBox="0 0 24 24"><path d="M4 20l4-1L20 7l-3-3L5 16z"/><path d="M14 6l3 3"/></svg><div class="feat" style="justify-content:center;margin-top:20px;font-size:32px;">Edit every word</div></div>
+    <div style="text-align:center;"><svg class="ico" style="width:80px;height:80px;" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c1.5 0 2-1 2-2s-.5-1.5-.5-2.5S14 12 16 12h3a2 2 0 002-2 8 8 0 00-9-7z"/></svg><div class="feat" style="justify-content:center;margin-top:20px;font-size:32px;">Change colours</div></div>
+    <div style="text-align:center;"><svg class="ico" style="width:80px;height:80px;" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg><div class="feat" style="justify-content:center;margin-top:20px;font-size:32px;">Add your photos</div></div>
+    <div style="text-align:center;"><svg class="ico" style="width:80px;height:80px;" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4v-5h16v5h-2M8 14h8v7H8z"/></svg><div class="feat" style="justify-content:center;margin-top:20px;font-size:32px;">Print at home &middot; A4</div></div>
+  </div>
+  <div style="position:absolute;bottom:150px;left:0;right:0;text-align:center;display:flex;justify-content:center;gap:26px;"><span class="badge">No design skills needed</span></div>
+</div>
+
+<!-- ============ 9 · HOW IT WORKS ============ -->
+<div class="limg" data-document-role="page" data-label="09 How It Works">
+  <div style="position:absolute;top:150px;left:0;right:0;text-align:center;">
+    <div class="kick" style="font-size:26px;letter-spacing:12px;">Instant Download</div>
+    <div class="h-serif" style="font-size:100px;margin-top:12px;">How it <span class="script" style="font-size:96px;">works</span></div>
+  </div>
+  <div style="position:absolute;top:520px;left:180px;right:180px;display:flex;flex-direction:column;gap:60px;">
+    <div style="display:flex;align-items:center;gap:50px;"><div class="h-serif" style="font-size:130px;color:var(--mauve);width:170px;text-align:center;">1</div><div><div class="feat" style="font-size:44px;font-weight:600;">Download instantly</div><div class="sub" style="text-transform:none;letter-spacing:1px;font-size:30px;margin-top:10px;">Get your PDF with the Canva template link.</div></div></div>
+    <div style="display:flex;align-items:center;gap:50px;"><div class="h-serif" style="font-size:130px;color:var(--mauve);width:170px;text-align:center;">2</div><div><div class="feat" style="font-size:44px;font-weight:600;">Open in Canva</div><div class="sub" style="text-transform:none;letter-spacing:1px;font-size:30px;margin-top:10px;">Click the link and make your own free copy.</div></div></div>
+    <div style="display:flex;align-items:center;gap:50px;"><div class="h-serif" style="font-size:130px;color:var(--mauve);width:170px;text-align:center;">3</div><div><div class="feat" style="font-size:44px;font-weight:600;">Edit &amp; print</div><div class="sub" style="text-transform:none;letter-spacing:1px;font-size:30px;margin-top:10px;">Personalise, then use digitally or print in A4.</div></div></div>
+  </div>
+  <div style="position:absolute;bottom:130px;left:0;right:0;text-align:center;" class="sub">works on desktop, tablet &amp; phone</div>
+</div>
+
+<!-- ============ 10 · THANK YOU / CTA ============ -->
+<div class="limg" data-document-role="page" data-label="10 Thank You CTA">
+  <div class="lframe" style="border-color:var(--mauve);opacity:.5;"></div>
+  <div class="center">
+    <svg class="ico" style="width:90px;height:90px;stroke:var(--mauve);margin-bottom:40px;" viewBox="0 0 24 24"><path d="M12 21C7 17 4 13 4 9a4 4 0 018-1 4 4 0 018 1c0 4-3 8-8 12z"/></svg>
+    <div class="script" style="font-size:140px;color:var(--ink);">thank you</div>
+    <div class="sub" style="font-size:32px;margin-top:24px;max-width:1100px;line-height:1.9;">Here's to planning, organising &amp; growing the business you dreamed of.</div>
+    <div style="width:140px;height:2px;background:var(--brown);margin:56px 0;"></div>
+    <div class="h-serif" style="font-size:60px;letter-spacing:6px;">THE SMALL BUSINESS PLANNER</div>
+    <div style="margin-top:44px;"><span class="badge" style="border-color:var(--mauve);color:var(--mauve);font-size:30px;padding:20px 56px;">Add to cart &middot; instant download</span></div>
+  </div>
+</div>
+
+</body>
+</html>
