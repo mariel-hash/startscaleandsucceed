@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Planner — Samples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@300;400;500&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F7F3EE;
+    --cream:#FBF8F4;
+    --beige:#EAE1D5;
+    --sand:#E3D8C8;
+    --taupe:#C9BBA8;
+    --brown:#8C7B6A;
+    --mauve:#C6A9A2;
+    --ink:#3B342C;
+    --line:#D8CFC2;
+    --serif:'Cormorant Garamond',serif;
+    --sans:'Montserrat',sans-serif;
+    --script:'Sacramento',cursive;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#ddd;}
+  .page{
+    position:relative;
+    width:794px;height:1123px;
+    background:var(--ivory);
+    color:var(--ink);
+    overflow:hidden;
+    margin:0 auto;
+  }
+  .content{position:absolute;top:56px;left:56px;right:56px;bottom:64px;}
+  /* ---------- HEADER SYSTEM ---------- */
+  .seclabel{font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:3px;color:var(--brown);text-transform:uppercase;}
+  .titlerow{display:flex;align-items:baseline;gap:14px;margin-top:6px;}
+  .ptitle{font-family:var(--serif);font-weight:600;font-size:40px;letter-spacing:1px;color:var(--ink);line-height:1;}
+  .accent{font-family:var(--script);font-size:38px;color:var(--brown);line-height:1;}
+  .rule{height:1px;background:var(--line);width:100%;margin-top:14px;}
+  .footer{position:absolute;left:0;right:0;bottom:34px;text-align:center;font-family:var(--sans);font-weight:300;font-size:8px;letter-spacing:4px;color:var(--taupe);text-transform:uppercase;}
+  /* ---------- FIELDS ---------- */
+  .flabel{font-family:var(--sans);font-weight:500;font-size:9px;letter-spacing:2px;color:var(--brown);text-transform:uppercase;margin-bottom:9px;}
+  .fline{height:1px;background:var(--line);width:100%;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;row-gap:34px;margin-top:40px;}
+  .field{}
+  .box{background:var(--cream);border:1px solid var(--taupe);border-radius:8px;}
+  .box-lines{background:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,var(--line) 33px,var(--line) 34px);}
+  /* ---------- TABLE ---------- */
+  table{width:100%;border-collapse:collapse;margin-top:34px;font-family:var(--sans);}
+  th{background:var(--sand);color:var(--ink);font-weight:500;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;text-align:left;padding:11px 10px;border:1px solid var(--taupe);}
+  td{height:38px;border:1px solid var(--taupe);padding:0 10px;font-size:10px;font-weight:300;}
+  tbody tr:nth-child(even) td{background:#F1EBE1;}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 · COVER ============ -->
+<div class="page" data-document-role="page" data-label="Cover">
+  <div style="position:absolute;top:30px;left:30px;right:30px;bottom:30px;border:1px solid var(--taupe);"></div>
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+    <div style="font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:6px;color:var(--brown);text-transform:uppercase;margin-bottom:26px;">The Small Business</div>
+    <div style="font-family:var(--serif);font-weight:600;font-size:66px;letter-spacing:4px;color:var(--ink);line-height:1.05;">BUSINESS<br>PLANNER</div>
+    <div style="width:60px;height:1px;background:var(--brown);margin:30px 0 22px;"></div>
+    <div style="font-family:var(--sans);font-weight:300;font-size:13px;letter-spacing:5px;color:var(--brown);text-transform:uppercase;">Plan &nbsp;&middot;&nbsp; Organise &nbsp;&middot;&nbsp; Grow</div>
+    <div style="font-family:var(--script);font-size:40px;color:var(--mauve);margin-top:30px;">for the modern entrepreneur</div>
+  </div>
+  <div style="position:absolute;left:110px;right:110px;bottom:120px;text-align:center;">
+    <div style="font-family:var(--sans);font-weight:400;font-size:9px;letter-spacing:3px;color:var(--brown);text-transform:uppercase;margin-bottom:14px;">This planner belongs to</div>
+    <div style="height:1px;background:var(--line);"></div>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 · WORKSHEET ============ -->
+<div class="page" data-document-role="page" data-label="Business Overview">
+  <div class="content">
+    <div class="seclabel">Section 01 &nbsp;&middot;&nbsp; Foundation</div>
+    <div class="titlerow"><span class="ptitle">Business Overview</span><span class="accent">the essentials</span></div>
+    <div class="rule"></div>
+
+    <div class="grid2">
+      <div class="field"><div class="flabel">Business Name</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Business Type</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Industry</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Start Date</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Location</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Website</div><div class="fline"></div></div>
+    </div>
+
+    <div style="margin-top:46px;">
+      <div class="flabel">Business Description</div>
+      <div class="box box-lines" style="height:170px;margin-top:6px;"></div>
+    </div>
+
+    <div style="margin-top:34px;">
+      <div class="flabel">Mission &mdash; in one sentence</div>
+      <div class="box" style="height:70px;margin-top:6px;"></div>
+    </div>
+
+    <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1fr;column-gap:40px;">
+      <div class="field"><div class="flabel">Email</div><div class="fline"></div></div>
+      <div class="field"><div class="flabel">Social Handle</div><div class="fline"></div></div>
+    </div>
+  </div>
+  <div class="footer">Business Planner &nbsp;&middot;&nbsp; 05</div>
+</div>
+
+<!-- ============ PAGE 3 · TABLE ============ -->
+<div class="page" data-document-role="page" data-label="Content Planner">
+  <div class="content">
+    <div class="seclabel">Section 05 &nbsp;&middot;&nbsp; Marketing</div>
+    <div class="titlerow"><span class="ptitle">Content Planner</span><span class="accent">show up</span></div>
+    <div class="rule"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:12%;">Date</th>
+          <th style="width:15%;">Platform</th>
+          <th style="width:15%;">Type</th>
+          <th style="width:24%;">Topic</th>
+          <th style="width:20%;">Caption / Status</th>
+          <th style="width:14%;">CTA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:34px;">
+      <div class="flabel">Notes &amp; Ideas</div>
+      <div class="box box-lines" style="height:150px;margin-top:6px;"></div>
+    </div>
+  </div>
+  <div class="footer">Business Planner &nbsp;&middot;&nbsp; 34</div>
+</div>
+
+</body>
+</html>
