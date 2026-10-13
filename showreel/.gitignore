@@ -1,0 +1,7 @@
+node_modules/
+out/stills/
+out/sheet/
+out/*.wav
+out/.seg*
+out/.segs.txt
+out/review*.jpg
