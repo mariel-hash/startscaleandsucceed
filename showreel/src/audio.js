@@ -68,9 +68,9 @@
     this.master.connect(glue); glue.connect(limit); limit.connect(ctx.destination);
 
     // buses
-    this.drums = this.bus(0.9);
-    this.sfx = this.bus(0.85);
-    this.music = ctx.createGain(); this.music.gain.value = 0.62;
+    this.drums = this.bus(0.6);
+    this.sfx = this.bus(1.55);
+    this.music = ctx.createGain(); this.music.gain.value = 0.4;
     this.duck = ctx.createGain(); // sidechain pump, automated from the kick
     this.music.connect(this.duck); this.duck.connect(this.master);
 
@@ -308,7 +308,7 @@
     bp.frequency.exponentialRampToValueAtTime(700, t + dur);
     var g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.32 * vel, t + dur * 0.6);
+    g.gain.exponentialRampToValueAtTime(0.5 * vel, t + dur * 0.6);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     var p = ctx.createStereoPanner();
     p.pan.setValueAtTime(-0.8 * dir, t); p.pan.linearRampToValueAtTime(0.8 * dir, t + dur);
@@ -323,7 +323,7 @@
     hp.frequency.setValueAtTime(1800, t); hp.frequency.exponentialRampToValueAtTime(6500, t + 0.16);
     var g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.2 * vel, t + 0.07);
+    g.gain.exponentialRampToValueAtTime(0.3 * vel, t + 0.07);
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
     var p = ctx.createStereoPanner();
     p.pan.setValueAtTime(-0.6 * dir, t); p.pan.linearRampToValueAtTime(0.6 * dir, t + 0.2);
@@ -334,7 +334,7 @@
     var ctx = this.ctx; vel = vel == null ? 1 : vel; pitch = pitch || 1;
     var o = ctx.createOscillator(); o.type = 'sine';
     o.frequency.setValueAtTime(950 * pitch, t); o.frequency.exponentialRampToValueAtTime(260 * pitch, t + 0.075);
-    var g = ctx.createGain(); this.env(g.gain, t, 0.2 * vel, 0.002, 0.09);
+    var g = ctx.createGain(); this.env(g.gain, t, 0.45 * vel, 0.002, 0.09);
     o.connect(g); this.out(g, this.sfx, 0, 0.05);
     o.start(t); o.stop(t + 0.12);
   };
@@ -445,6 +445,8 @@
     var breakdown = opts.breakdownBeat != null ? opts.breakdownBeat : 26; // drums out, riser
     var logo = opts.logoBeat != null ? opts.logoBeat : 28;      // final hit
     var end = 32;
+    var calm0 = opts.calmFrom != null ? opts.calmFrom : 5, calm1 = opts.calmTo != null ? opts.calmTo : 11.5;
+    function calm(beat) { return beat >= calm0 && beat < calm1; }
     var b, t, i;
 
     // ---- intro (beats 0..drop): filtered pad + riser into the hit
@@ -455,12 +457,13 @@
     // ---- groove (drop..breakdown)
     for (b = drop; b < breakdown; b++) {
       t = b * BEAT;
-      st.kick(t, b === drop ? 1.1 : 0.95);
-      if (b % 2 === 1) st.clap(t, 0.85);
+      st.kick(t, b === drop ? 1.1 : calm(b) ? 0.8 : 0.95);
+      if (b % 2 === 1 && !calm(b)) st.clap(t, 0.85);
+      var hv = calm(b) ? 0.55 : 1;
       for (i = 0; i < 4; i++) {
         var s = t + i * STEP;
-        if (i === 2) st.hat(s, 0.8, true, 0.15);
-        else st.hat(s, i === 0 ? 0.35 : 0.55, false, i % 2 ? -0.2 : 0.2);
+        if (i === 2) st.hat(s, 0.8 * hv, true, 0.15);
+        else st.hat(s, (i === 0 ? 0.35 : 0.55) * hv, false, i % 2 ? -0.2 : 0.2);
       }
       // off-beat house bass
       var bar = Math.floor(b / 4);
@@ -475,8 +478,8 @@
       for (i = 0; i < 4; i++) {
         var step = (b * 4 + i);
         var note = ch[pattern[step % pattern.length]];
-        var bright = 0.25 + 0.75 * ((b - drop) / (breakdown - drop));
-        var vel = (i === 0 ? 1 : 0.7) * (0.75 + 0.25 * bright);
+        var bright = (0.25 + 0.75 * ((b - drop) / (breakdown - drop))) * (calm(b) ? 0.55 : 1);
+        var vel = (i === 0 ? 1 : 0.7) * (0.75 + 0.25 * bright) * (calm(b) ? 0.5 : 1);
         st.pluck(b * BEAT + i * STEP, hz(note), STEP * 0.9, vel, bright, i % 2 ? 0.3 : -0.3);
       }
     }
@@ -487,6 +490,9 @@
       var nts = CHORDS[bi].notes.slice(0, 3).map(function (n) { return hz(n) / 2; });
       st.pad(start, nts, (bi + 1) * BAR - start - 0.05, 0.9, 1400 + bi * 250);
     }
+
+    // section accents
+    (opts.crashes || [12, 18]).forEach(function (cb) { st.crash(cb * BEAT, 0.8); });
 
     // first hit: crash + impact
     st.crash(drop * BEAT, 1);
@@ -538,7 +544,7 @@
 
   function render(ctx, cues, opts) {
     var st = new Studio(ctx);
-    score(st, opts);
+    if (!(opts && opts.noScore)) score(st, opts);
     for (var i = 0; i < cues.length; i++) play(st, cues[i]);
     return st;
   }

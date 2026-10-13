@@ -27,12 +27,13 @@ const FPS = +(args.fps || 60);
 const [W, H] = (args.size || '1920x1080').split('x').map(Number);
 const PAGE = args.page || 'index.html';
 const OUT_DIR = path.resolve(here, args.outdir || 'out');
-const NAME = args.name || 'startscaleandsucceed-showreel';
+const NAME = args.name || (args.hud != null && String(args.hud) === '0' ? 'startscaleandsucceed-ad' : 'startscaleandsucceed-showreel');
 const WORKERS = +(args.workers || 3);
-const CRF = String(args.crf || 16);
+const CRF = String(args.crf || 18);
+const HUD = args.hud == null ? true : String(args.hud) !== '0';
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
-const url = pathToFileURL(path.join(here, PAGE)).href + '?render=1';
+const url = pathToFileURL(path.join(here, PAGE)).href + '?render=1' + (HUD ? '' : '&hud=0');
 
 function run(cmd, argv, opts = {}) {
   return new Promise((res, rej) => {
