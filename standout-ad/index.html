@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Standout Ad</title>
+<style>
+@font-face{font-family:Caslon;src:url(fonts/LibreCaslonText-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:Caslon;src:url(fonts/LibreCaslonText-Italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:Inter;src:url(fonts/Inter.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+:root{--cobalt:#0046DA;--ink-blue:#0054AC;--ink:#0B0B0F;--body:#3A3F47;--muted:#6B7280;--green:#22A045}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#05070d;overflow:hidden}
+body{font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:var(--ink)}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;flex:none;background:#fff;transform-origin:50% 50%}
+.layer,.abs{position:absolute;left:0;top:0}
+.layer{width:1920px;height:1080px}
+.serif{font-family:Caslon,Georgia,serif;font-weight:400;letter-spacing:-.012em;white-space:nowrap;line-height:1.08}
+.it{font-style:italic;color:var(--ink-blue)}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em .1em .24em;margin:-.12em -.1em -.24em}
+.w{display:inline-block;transform-origin:0 100%}
+.eyebrow{font:700 22px/1 Inter;letter-spacing:.16em;color:var(--ink-blue);white-space:nowrap}
+.sub{font:400 30px/1.35 Inter;color:var(--body);white-space:nowrap}
+
+/* backgrounds */
+#bg{background:linear-gradient(168deg,#D6E8FF 0%,#E7F1FF 34%,#F5FAFF 66%,#FFFFFF 100%)}
+.blob{position:absolute;border-radius:50%}
+#grain{background:url(assets/grain.png);opacity:.045;mix-blend-mode:overlay;pointer-events:none}
+#vig{background:radial-gradient(ellipse 75% 75% at 50% 46%,rgba(0,0,0,0) 60%,rgba(8,28,70,.10) 100%);pointer-events:none}
+#flash{background:#fff;opacity:0}
+
+/* 1 hook */
+.hook{left:0;width:1920px;text-align:center;font-size:140px;color:var(--ink)}
+#per{color:transparent}
+#dot{width:100px;height:100px;margin:-50px 0 0 -50px;border-radius:50%;background:var(--cobalt)}
+
+/* 2 sameness grid */
+#grid{width:1920px;height:1080px;transform-origin:960px 610px}
+.card{position:absolute;width:236px;height:300px;margin:-150px 0 0 -118px;border-radius:22px;background:#fff;
+  box-shadow:0 12px 30px -10px rgba(20,50,110,.16),0 0 0 1px rgba(20,50,110,.07)}
+.card .av{position:absolute;left:72px;top:34px;width:92px;height:92px;border-radius:50%;background:#D7DEE8}
+.card .b1{position:absolute;left:50px;top:148px;width:136px;height:14px;border-radius:7px;background:#D7DEE8}
+.card .b2{position:absolute;left:32px;top:176px;width:172px;height:9px;border-radius:5px;background:#E5EAF0}
+.card .b3{position:absolute;left:50px;top:194px;width:136px;height:9px;border-radius:5px;background:#E5EAF0}
+.card .ch{position:absolute;top:224px;width:50px;height:18px;border-radius:9px;background:#EDF0F4}
+.card .bt{position:absolute;left:60px;top:256px;width:116px;height:26px;border-radius:13px;border:2px solid #E1E6ED}
+.card .hl{position:absolute;inset:-2px;border-radius:24px;border:3px solid var(--cobalt);opacity:0}
+#scan{width:320px;height:1080px;margin-left:-160px;
+  background:linear-gradient(90deg,rgba(0,70,218,0) 0%,rgba(0,70,218,.07) 38%,rgba(0,70,218,.14) 50%,rgba(0,70,218,.07) 62%,rgba(0,70,218,0) 100%)}
+#scan::after{content:"";position:absolute;left:159px;top:0;width:2px;height:100%;
+  background:linear-gradient(180deg,rgba(0,70,218,0),rgba(0,70,218,.55) 25%,rgba(0,70,218,.55) 75%,rgba(0,70,218,0))}
+#fade2{width:1920px;height:400px;background:linear-gradient(180deg,rgba(224,237,255,.99) 0%,rgba(227,239,255,.94) 48%,rgba(230,241,255,0) 100%)}
+#t2{left:0;width:1920px;text-align:center;top:86px;font-size:92px}
+#t2 .gr{font-style:italic;color:#8A93A3}
+
+/* 3 stand out */
+#pan{width:3840px;height:1080px}
+#glow3{width:1300px;height:1300px;margin:-650px 0 0 -650px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,70,218,.16) 0%,rgba(0,70,218,.06) 40%,rgba(0,70,218,0) 70%)}
+#hero{width:620px;height:600px;margin:-300px 0 0 -310px;border-radius:30px;background:#fff;overflow:hidden;
+  box-shadow:0 60px 110px -30px rgba(0,40,120,.35),0 0 0 1px rgba(0,40,120,.06)}
+#hero .cover{position:absolute;left:0;top:0;width:620px;height:150px;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 2px,rgba(255,255,255,0) 2px 16px),linear-gradient(118deg,#0350A8 0%,#2E6CB2 55%,#5D8DC4 100%)}
+#hero .ring{position:absolute;left:36px;top:66px;width:180px;height:180px;border-radius:50%;background:var(--cobalt)}
+#hero .ph{position:absolute;left:44px;top:74px;width:164px;height:164px;border-radius:50%;border:7px solid #fff;overflow:hidden;background:#fff}
+#hero .ph img{width:100%;height:100%;display:block}
+#hero .name{position:absolute;left:44px;top:258px;font:600 36px/1 Inter;letter-spacing:-.01em;white-space:nowrap}
+.deg{font:500 17px/1 Inter;color:var(--muted);background:#F1F3F6;border-radius:8px;padding:6px 9px;margin-left:10px;vertical-align:5px}
+#hero .hl3{position:absolute;left:44px;top:306px;font:400 25px/1.2 Inter;color:#1F2329;white-space:nowrap}
+#hlText{border-radius:5px;padding:1px 2px;margin-left:-2px}
+#caret{display:inline-block;width:3px;height:28px;background:var(--cobalt);margin-left:2px;vertical-align:-5px;border-radius:2px}
+#hero .loc{position:absolute;left:44px;top:350px;font:400 19px/1 Inter;color:var(--muted);white-space:nowrap}
+.lk{color:var(--cobalt);font-weight:500}
+#hero .chips3{position:absolute;left:44px;top:390px;display:flex;gap:8px}
+.chips3 span{font:500 15px/1 Inter;color:#374151;background:#F1F3F6;border-radius:20px;padding:10px 12px;display:inline-block;white-space:nowrap}
+#hero .about{position:absolute;left:44px;top:452px;width:532px;border-top:1px solid #EDF0F3;padding-top:22px}
+.about b{font:600 21px/1 Inter;display:block;margin-bottom:10px}
+.about p{margin:0;font:400 18px/1.5 Inter;color:#4B5563}
+.big{font-size:240px;line-height:1}
+.notif{width:480px;margin-left:-240px;border-radius:24px;background:#fff;padding:20px 22px 20px 102px;
+  box-shadow:0 30px 60px -18px rgba(0,40,120,.30),0 0 0 1px rgba(0,40,120,.06);font-family:Inter;white-space:nowrap}
+.notif .ic{position:absolute;left:22px;top:22px;width:64px;height:64px;border-radius:50%;overflow:hidden}
+.notif .ic img{width:100%;height:100%;display:block}
+.notif .n1{font:600 22px/1.15 Inter;color:var(--ink)}
+.notif .n1 span{font-weight:400;color:var(--muted);font-size:18px}
+.notif .n2{font:400 17px/1.3 Inter;color:var(--muted);margin-top:4px}
+.notif .n3{font:500 19px/1.3 Inter;color:#1F2329;margin-top:10px}
+.notif .li{position:absolute;right:20px;top:20px;width:34px;height:34px;border-radius:7px;background:#0A66C2;color:#fff;font:700 21px/34px Inter;text-align:center;letter-spacing:-.04em}
+.notif .msg{background:var(--cobalt);display:flex;align-items:center;justify-content:center}
+.ring2{width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;border:6px solid var(--cobalt)}
+.spk{width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%}
+
+/* 4 score + tools */
+#score{width:470px;height:560px;margin:-280px 0 0 -235px;border-radius:34px;background:#fff;
+  box-shadow:0 60px 110px -30px rgba(0,40,120,.32),0 0 0 1px rgba(0,40,120,.06)}
+#score .t{position:absolute;left:0;width:100%;top:38px;text-align:center;font:600 26px/1 Inter}
+#gauge{position:absolute;left:60px;top:86px;width:350px;height:350px}
+#gnum{position:absolute;left:0;width:100%;top:194px;text-align:center;font:600 118px/1 Inter;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+#gden{position:absolute;left:0;width:100%;top:318px;text-align:center;font:400 30px/1 Inter;color:var(--muted)}
+#gex{position:absolute;left:50%;top:394px;width:180px;margin-left:-90px;text-align:center;font:600 22px/40px Inter;color:#137A33;background:#E3F5E8;border-radius:20px}
+#gchk{position:absolute;left:62px;top:462px;width:360px;display:grid;grid-template-columns:1fr 1fr;row-gap:16px;column-gap:10px}
+.ck{font:500 19px/24px Inter;color:#374151;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.ck i{flex:none;width:24px;height:24px;border-radius:50%;background:var(--green);display:block;position:relative}
+.ck i svg{position:absolute;left:0;top:0}
+.tool{width:300px;height:280px;margin:-140px 0 0 -150px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 40px 80px -24px rgba(0,40,120,.30),0 0 0 1px rgba(0,40,120,.06)}
+.tool img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* 5 daily */
+#t5{left:0;width:1920px;text-align:center;top:92px;font-size:80px}
+#phone{width:430px;height:880px;margin-left:-215px;border-radius:72px;background:#101114;
+  box-shadow:0 70px 120px -30px rgba(0,30,90,.45),inset 0 0 0 2px #2B2D33,inset 0 0 0 7px #17181C}
+#phone .scr{position:absolute;left:15px;top:15px;right:15px;bottom:15px;border-radius:58px;overflow:hidden;
+  background:radial-gradient(120% 80% at 20% 10%,#A9C9F8 0%,rgba(169,201,248,0) 60%),linear-gradient(165deg,#7EA9EE 0%,#3A72D2 42%,#0E46A6 100%)}
+#phone .isl{position:absolute;left:50%;top:28px;width:126px;height:37px;margin-left:-63px;border-radius:20px;background:#000}
+#phone .sb{position:absolute;right:36px;top:34px;display:flex;gap:7px;align-items:center}
+#phone .date{position:absolute;left:0;width:100%;top:116px;text-align:center;font:500 25px/1 Inter;color:rgba(255,255,255,.88)}
+#phone .clock{position:absolute;left:0;width:100%;top:146px;text-align:center;font:600 136px/1 Inter;color:#fff;letter-spacing:-.03em}
+#pn{position:absolute;left:14px;right:14px;top:330px;border-radius:30px;background:rgba(255,255,255,.9);padding:20px 22px 22px 22px;
+  box-shadow:0 20px 40px -12px rgba(0,20,60,.35)}
+#pn .app{display:flex;align-items:center;gap:12px}
+#pn .app img{width:44px;height:44px;border-radius:11px;display:block}
+#pn .an{font:600 19px/1 Inter;color:#111;flex:1}
+#pn .tm{font:400 17px/1 Inter;color:#6b6f78}
+#pn .pt{font:600 22px/1.25 Inter;color:#0B0B0F;margin-top:14px}
+#pn .pb{font:400 19px/1.35 Inter;color:#30343B;margin-top:4px}
+#pn .pb span{color:var(--cobalt);font-weight:500}
+#pn2{position:absolute;left:14px;right:14px;top:520px;border-radius:30px;background:rgba(255,255,255,.75);padding:18px 22px;
+  box-shadow:0 20px 40px -12px rgba(0,20,60,.3)}
+#days{left:0;top:0}
+.day{position:absolute;width:84px;margin-left:-42px;text-align:center}
+.day b{display:block;font:600 24px/1 Inter;color:var(--muted);margin-bottom:16px}
+.day i{display:block;position:relative;width:76px;height:76px;margin:0 auto;border-radius:50%;border:3px solid #C9D8F2;background:#fff}
+.day .fill{position:absolute;left:-3px;top:-3px;width:76px;height:76px;border-radius:50%;background:var(--cobalt)}
+.day svg{position:absolute;left:-3px;top:-3px}
+#wk{font:600 22px/1 Inter;letter-spacing:.14em;color:var(--ink-blue)}
+#dailyc{width:620px;height:511px;margin:-255px 0 0 -310px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 50px 100px -30px rgba(0,40,120,.30),0 0 0 1px rgba(0,40,120,.06)}
+#dailyc img{width:100%;height:100%;display:block}
+
+/* 6 founder */
+#willc,#willdot{position:absolute;border-radius:50%}
+#willimg{position:absolute;left:0;top:0;width:1100px;height:1085px}
+#t6{left:1110px;top:394px;font-size:78px;color:var(--ink)}
+#mq{left:1110px;top:742px;width:810px;height:60px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%)}
+#mqi{position:absolute;left:0;top:0;white-space:nowrap;display:flex;gap:64px;align-items:center;height:60px}
+#mqi span{color:#7D8492;font-size:30px}
+.lf1{font-family:Caslon,Georgia,serif;font-style:italic}
+.lf2{font:800 27px Inter!important;letter-spacing:.04em}
+.lf3{font:400 24px Inter!important;letter-spacing:.5em}
+.lf4{font-family:Georgia,serif;letter-spacing:.02em;transform:scaleX(.82);display:inline-block}
+
+/* 7-8 cobalt finale */
+#cob{background:linear-gradient(118deg,#0350A8 0%,#1C5DAE 28%,#4A80B2 50%,#2A63A9 70%,#164C97 100%)}
+#sheen{width:1400px;height:2400px;margin:-1200px 0 0 -700px;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.10) 50%,rgba(255,255,255,0) 100%)}
+#edge{width:10px;height:1600px;margin:-800px 0 0 -5px;background:linear-gradient(180deg,rgba(160,200,255,0),rgba(190,220,255,.9),rgba(160,200,255,0))}
+.tg{font-size:136px;color:#fff;transform-origin:0 0}
+.tg.it{color:#CFE1FF}
+.kring{width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:3px solid rgba(255,255,255,.75)}
+#logo{left:140px;top:236px;width:740px;height:92px}
+#logo img{position:absolute;display:block}
+#logo .rule{position:absolute;background:#fff;transform-origin:50% 50%}
+#cta{left:140px;top:676px;height:88px;padding:0 48px;border-radius:44px;background:#fff;color:var(--cobalt);
+  font:600 31px/88px Inter;white-space:nowrap;box-shadow:0 24px 50px -16px rgba(0,10,40,.45);transform-origin:50% 50%}
+#cta .ar{display:inline-block;margin-left:10px}
+#ctaRip{width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;background:rgba(255,255,255,.55)}
+#url{left:140px;top:802px;font:500 30px/1 Inter;color:rgba(255,255,255,.88);letter-spacing:.01em;white-space:nowrap}
+#url b{font-weight:600;color:#fff}
+#dev{width:880px;height:843px;margin:-421px 0 0 -440px}
+#dev img{width:100%;height:100%;display:block;filter:drop-shadow(0 50px 60px rgba(0,15,50,.40))}
+#cursor{width:44px;height:60px;transform-origin:4px 4px}
+
+/* preview UI */
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;gap:12px;align-items:center;padding:12px 18px;
+  background:linear-gradient(0deg,rgba(0,0,0,.7),rgba(0,0,0,0));color:#fff;font:500 14px Inter;z-index:10}
+#ui button{font:600 14px Inter;border:0;border-radius:20px;padding:9px 16px;background:#fff;color:#0046DA;cursor:pointer}
+#ui input{flex:1;accent-color:#0046DA}
+#tc{font-variant-numeric:tabular-nums;min-width:110px;text-align:right;opacity:.9}
+#big{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:11;cursor:pointer;background:rgba(5,8,16,.35)}
+#big div{width:120px;height:120px;border-radius:50%;background:#0046DA;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 20px 60px rgba(0,70,218,.5)}
+.render #ui,.render #big{display:none}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage"></div></div>
+<div id="big"><div><svg width="44" height="50" viewBox="0 0 44 50"><path d="M4 3 L41 25 L4 47 Z" fill="#fff"/></svg></div></div>
+<div id="ui"><button id="pp">Play</button><input id="seek" type="range" min="0" max="15000" value="0"><span id="tc">0.00 / 15.00</span></div>
+<audio id="snd" src="soundtrack.m4a" preload="auto"></audio>
+<script src="assets/geometry.js"></script>
+<script>
+(() => {
+"use strict";
+const RENDER = new URLSearchParams(location.search).has("render");
+if (RENDER) document.documentElement.classList.add("render");
+
+/* ================= timing ================= */
+const BPM = 128, BEAT = 60 / BPM, BAR = 4 * BEAT, DUR = 15;
+const B = (bar, beat = 0) => (bar - 1) * BAR + beat * BEAT;     // bar is 1-based, beat 0-based
+const T = {b2: B(2), b3: B(3), b4: B(4), b5: B(5), b6: B(6), b7: B(7), b8: B(8)};
+
+/* ================= math ================= */
+const clamp = (x, a = 0, b = 1) => x < a ? a : x > b ? b : x;
+const lerp = (a, b, p) => a + (b - a) * p;
+const P = (t, t0, d) => clamp((t - t0) / d);
+const E = {
+  lin: p => p,
+  out2: p => 1 - (1 - p) ** 2, in2: p => p * p,
+  out3: p => 1 - (1 - p) ** 3, in3: p => p ** 3, io3: p => p < .5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2,
+  out4: p => 1 - (1 - p) ** 4, in4: p => p ** 4,
+  out5: p => 1 - (1 - p) ** 5, io5: p => p < .5 ? 16 * p ** 5 : 1 - (-2 * p + 2) ** 5 / 2,
+  outX: p => p >= 1 ? 1 : 1 - 2 ** (-10 * p), inX: p => p <= 0 ? 0 : 2 ** (10 * p - 10),
+  ioX: p => p <= 0 ? 0 : p >= 1 ? 1 : p < .5 ? 2 ** (20 * p - 10) / 2 : (2 - 2 ** (-20 * p + 10)) / 2,
+  ioS: p => -(Math.cos(Math.PI * p) - 1) / 2,
+  outB: (p, s = 1.7) => 1 + (s + 1) * (p - 1) ** 3 + s * (p - 1) ** 2,
+};
+const tw = (t, t0, d, e = E.out3) => e(P(t, t0, d));
+// analytic damped spring (step response); f = natural frequency (Hz), z = damping ratio
+function spring(dt, f = 2, z = .5) {
+  if (dt <= 0) return 0;
+  const w = 2 * Math.PI * f;
+  if (z < 1) { const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * dt) * (Math.cos(wd * dt) + z * w / wd * Math.sin(wd * dt)); }
+  return 1 - Math.exp(-w * dt) * (1 + w * dt);
+}
+const wob = (dt, f = 8, k = 10) => dt < 0 ? 0 : Math.sin(2 * Math.PI * f * dt) * Math.exp(-k * dt);
+const bump = (dt, k = 10) => dt < 0 ? 0 : dt * k * Math.exp(1 - dt * k);       // 0 -> 1 (at 1/k) -> 0
+const rnd = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const bez = (a, b, c, u) => (1 - u) * (1 - u) * a + 2 * (1 - u) * u * b + u * u * c;
+
+/* ================= DOM helpers ================= */
+const stage = document.getElementById("stage");
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+function el(tag, cls, parent = stage, html = "", css = "") {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html) e.innerHTML = html;
+  if (css) e.style.cssText = css;
+  parent.appendChild(e);
+  return e;
+}
+const f2 = v => (Math.round(v * 100) / 100);
+// cached style writer: x/y px, xp/yp %, r deg, s/sx/sy scale, o opacity, f filter, clip clip-path
+function S(e, o) {
+  let tf = "";
+  if (o.x != null || o.y != null) tf += `translate(${f2(o.x || 0)}px,${f2(o.y || 0)}px)`;
+  if (o.xp != null || o.yp != null) tf += ` translate(${f2(o.xp || 0)}%,${f2(o.yp || 0)}%)`;
+  if (o.pz) tf = `perspective(${o.pz}px) ` + tf;
+  if (o.ry) tf += ` rotateY(${f2(o.ry)}deg)`;
+  if (o.rx) tf += ` rotateX(${f2(o.rx)}deg)`;
+  if (o.r) tf += ` rotate(${f2(o.r * 10) / 10}deg)`;
+  if (o.s != null) tf += ` scale(${Math.round(o.s * 1e4) / 1e4})`;
+  if (o.sx != null || o.sy != null) tf += ` scale(${Math.round((o.sx ?? 1) * 1e4) / 1e4},${Math.round((o.sy ?? 1) * 1e4) / 1e4})`;
+  const st = e.style, c = e._c || (e._c = {});
+  if (tf !== c.tf) { st.transform = tf || "none"; c.tf = tf; }
+  if (o.o != null) {
+    const v = Math.round(clamp(o.o) * 1000) / 1000;
+    if (v !== c.o) { st.opacity = v; st.visibility = v <= 0 ? "hidden" : "visible"; c.o = v; }
+  }
+  if (o.f != null && o.f !== c.f) { st.filter = o.f; c.f = o.f; }
+  if (o.clip != null && o.clip !== c.clip) { st.clipPath = o.clip; c.clip = o.clip; }
+  if (o.bg != null && o.bg !== c.bg) { st.background = o.bg; c.bg = o.bg; }
+}
+const show = (e, v) => { const c = e._c || (e._c = {}); if (c.show !== v) { e.style.display = v ? "" : "none"; c.show = v; } };
+const mw = (w, cls = "") => `<span class="m"><span class="w ${cls}">${w}</span></span>`;
+const mws = (txt, cls = "") => txt.split(" ").map(w => mw(w, cls)).join(" ");
+const place = (e, x, y) => { e.style.left = x + "px"; e.style.top = y + "px"; };
+
+/* ================= audio cue sheet (consumed by render/soundtrack.py) ================= */
+const CUES = [];
+const cue = (t, type, o = {}) => CUES.push({t: Math.round(t * 1e4) / 1e4, type, ...o});
+const NOTE = {C5: 523.25, D5: 587.33, E5: 659.25, G5: 783.99, A5: 880, C6: 1046.5, D6: 1174.66, E6: 1318.51, G6: 1567.98};
+
+/* ================= particles ================= */
+const bursts = [];
+function burst(parent, x, y, t0, o = {}) {
+  const n = o.n || 10, els = [];
+  for (let k = 0; k < n; k++) { const e = el("div", "abs spk", parent); e.style.background = o.color || "#fff"; els.push(e); }
+  bursts.push({els, x, y, t0, n, dist: o.dist || 95, size: o.size || 1, seed: o.seed || 1, dur: o.dur || .65});
+}
+function updBursts(t) {
+  for (const b of bursts) {
+    const p = (t - b.t0) / b.dur;
+    for (let k = 0; k < b.n; k++) {
+      const e = b.els[k];
+      if (p <= 0 || p >= 1) { S(e, {o: 0}); continue; }
+      const a = 2 * Math.PI * k / b.n + (rnd(b.seed + k) - .5) * .5;
+      const d = b.dist * (.65 + .35 * rnd(b.seed + k * 7)) * E.out3(p);
+      S(e, {x: b.x + Math.cos(a) * d, y: b.y + Math.sin(a) * d, s: b.size * (1 - p) * (.7 + .6 * rnd(b.seed + k * 3)), o: 1 - p * p});
+    }
+  }
+}
+
+/* ================= build: background ================= */
+const bg = el("div", "layer", stage, "", ""); bg.id = "bg";
+const blobs = [
+  {c: "rgba(0,84,172,.13)", r: 520, x: 1500, y: 180, ax: 120, ay: 60, f: .09, ph: 0},
+  {c: "rgba(110,165,255,.22)", r: 620, x: 260, y: 880, ax: 140, ay: 50, f: .07, ph: 2},
+  {c: "rgba(0,70,218,.08)", r: 460, x: 980, y: 560, ax: 200, ay: 90, f: .06, ph: 4},
+].map(b => { const e = el("div", "blob", bg); e.style.cssText = `left:${-b.r}px;top:${-b.r}px;width:${b.r * 2}px;height:${b.r * 2}px;background:radial-gradient(circle,${b.c} 0%,rgba(255,255,255,0) 70%)`; return {...b, e}; });
+
+/* ================= build: 2 grid (below hook text) ================= */
+const s2 = el("div", "layer", stage);
+const grid = el("div", "abs", s2); grid.id = "grid";
+const cards = [];
+for (let j = -2; j <= 1; j++) for (let i = -4; i <= 4; i++) {
+  const c = el("div", "card", grid, `<div class="av"></div><div class="b1"></div><div class="b2"></div><div class="b3"></div>
+    <div class="ch" style="left:32px"></div><div class="ch" style="left:93px"></div><div class="ch" style="left:154px"></div><div class="bt"></div><div class="hl"></div>`);
+  const cx = 960 + i * 266, cy = 610 + j * 330;
+  place(c, cx, cy);
+  cards.push({e: c, hl: $(".hl", c), i, j, cx, cy, d: Math.hypot(i, j * 1.15), center: i === 0 && j === 0});
+}
+const scan = el("div", "abs", s2); scan.id = "scan";
+const fade2 = el("div", "abs", s2); fade2.id = "fade2";
+const t2 = el("div", "abs serif", s2, `${mws("Most profiles")} ${mws("blend in.", "gr")}`); t2.id = "t2";
+
+/* ================= build: 1 hook ================= */
+const s1 = el("div", "layer", stage);
+const hEy = el("div", "abs eyebrow", s1, "STANDOUT ON LINKEDIN", "left:0;width:1920px;text-align:center;top:300px;font-size:24px"); hEy.id = "hEy";
+const h1 = el("div", "abs serif hook", s1, mws("Recruiters decide"), "top:348px");
+const h2 = el("div", "abs serif hook it", s1, `${mw("in")} ${mw("7")} ${mw('seconds<span id="per">.</span>')}`, "top:524px");
+const sw = el("div", "abs", s1, `<svg width="1920" height="1080"><path id="swp" fill="none" stroke="#0046DA" stroke-width="9" stroke-linecap="round"/></svg>`);
+const swp = $("#swp", sw);
+
+/* ================= build: 3 + 4 on a panning strip ================= */
+const pan = el("div", "abs", stage); pan.id = "pan";
+const glow3 = el("div", "abs", pan); glow3.id = "glow3"; place(glow3, 1270, 560);
+const r1 = el("div", "abs ring2", pan), r2 = el("div", "abs ring2", pan);
+const hero = el("div", "abs", pan, `<div class="cover"></div><div class="ring"></div><div class="ph"><img src="assets/james.png" alt=""></div>
+  <div class="name">James Carter<span class="deg">2nd</span></div>
+  <div class="hl3"><span id="hlText"></span><span id="caret"></span></div>
+  <div class="loc">London, United Kingdom · <span class="lk">Contact info</span></div>
+  <div class="chips3"><span>Operational Strategy</span><span>Business Scaling</span><span>SaaS</span><span>Team Leadership</span></div>
+  <div class="about"><b>About</b><p>I help B2B companies scale efficiently through better operations, smarter systems, and high-performing teams.</p></div>`);
+hero.id = "hero";
+const heroRing = $(".ring", hero), heroPh = $(".ph", hero), hlText = $("#hlText", hero), caret = $("#caret", hero);
+place(hero, 0, 0);
+const heroChips = $$(".chips3 span", hero), heroAbout = $(".about", hero), heroLoc = $(".loc", hero), heroName = $(".name", hero);
+const stand = el("div", "abs serif big", pan, mw("Stand"), "left:122px;top:296px;color:#0B0B0F");
+const out3 = el("div", "abs serif big it", pan, mw("out."), "left:128px;top:534px");
+const sub3 = el("div", "abs sub", pan, mws("Your LinkedIn, rewritten for recruiter search."), "left:136px;top:812px");
+const n1 = el("div", "abs notif", pan, `<div class="ic"><img src="assets/bex.png" alt=""></div><div class="li">in</div>
+  <div class="n1">Bex Coleman <span>· 2nd</span></div><div class="n2">Talent Partner at Blueprint Search</div><div class="n3">Viewed your profile · now</div>`);
+const n2 = el("div", "abs notif", pan, `<div class="ic msg"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+  <div class="n1">New message <span>· now</span></div><div class="n3" style="margin-top:6px">“Hi James, open to a quick chat<br>about a COO role?”</div>`);
+const N1 = {x: 1640, y: 236, r: -3}, N2 = {x: 1004, y: 912, r: 2.5};
+place(n1, N1.x, N1.y - 70); place(n2, N2.x, N2.y - 70);
+
+// 4: score + tools (x offset 1920)
+const X4 = 1920;
+const t4e = el("div", "abs eyebrow", pan, "FREE TOOLS", `left:${X4 + 146}px;top:312px`);
+const t4a = el("div", "abs serif", pan, mws("See what"), `left:${X4 + 136}px;top:352px;font-size:108px;color:#0B0B0F`);
+const t4b = el("div", "abs serif it", pan, mws("recruiters see."), `left:${X4 + 136}px;top:472px;font-size:108px`);
+const sub4 = el("div", "abs sub", pan, mws("Free LinkedIn Score, CVs and cover letters."), `left:${X4 + 142}px;top:640px;font-size:29px`);
+const TOOLS = [
+  {src: "tool-rewrite", x: 1060, y: 330, r: -7}, {src: "tool-cover", x: 1570, y: 322, r: 6},
+  {src: "tool-ats", x: 1580, y: 806, r: -5}, {src: "tool-cv", x: 1076, y: 812, r: 7},
+].map((d, k) => { const e = el("div", "abs tool", pan, `<img src="assets/${d.src}.png" alt="">`); place(e, X4 + d.x, d.y); return {...d, e, k}; });
+const score = el("div", "abs", pan, `<div class="t">LinkedIn Score</div>
+  <svg id="gauge" viewBox="0 0 350 350"><defs><linearGradient id="gg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2DB45A"/><stop offset="1" stop-color="#139447"/></linearGradient></defs>
+  <circle cx="175" cy="175" r="150" fill="none" stroke="#EDF0F4" stroke-width="22" stroke-linecap="round" stroke-dasharray="706.86 942.48" transform="rotate(135 175 175)"/>
+  <circle id="garc" cx="175" cy="175" r="150" fill="none" stroke="url(#gg)" stroke-width="22" stroke-linecap="round" stroke-dasharray="0 942.48" transform="rotate(135 175 175)"/>
+  <circle id="gknob" cx="175" cy="25" r="9" fill="#fff" stroke="#139447" stroke-width="5"/></svg>
+  <div id="gnum">0</div><div id="gden">/100</div><div id="gex">Excellent</div>
+  <div id="gchk">${["Searchability", "Clarity", "Credibility", "Engagement"].map(s => `<div class="ck"><i><svg width="24" height="24" viewBox="0 0 24 24"><path d="M7 12.5l3.2 3.2L17.2 8.8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16" stroke-dashoffset="16"/></svg></i>${s}</div>`).join("")}</div>`);
+score.id = "score"; place(score, X4 + 1322, 568);
+const garc = $("#garc", score), gknob = $("#gknob", score), gnum = $("#gnum", score), gex = $("#gex", score), gden = $("#gden", score);
+const gcks = $$(".ck", score);
+
+/* ================= build: 5 daily ================= */
+const s5 = el("div", "layer", stage);
+const t5 = el("div", "abs serif", s5, `${mws("Two ready-to-post updates.")} ${mws("Every weekday.", "it")}`); t5.id = "t5";
+const dailyc = el("div", "abs", s5, `<img src="assets/daily.png" alt="">`); dailyc.id = "dailyc"; place(dailyc, 1562, 650);
+const phone = el("div", "abs", s5, `<div class="scr">
+   <div class="sb"><svg width="26" height="16" viewBox="0 0 26 16"><rect x="0" y="10" width="4" height="6" rx="1" fill="#fff"/><rect x="7" y="7" width="4" height="9" rx="1" fill="#fff"/><rect x="14" y="4" width="4" height="12" rx="1" fill="#fff"/><rect x="21" y="0" width="4" height="16" rx="1" fill="#fff"/></svg>
+   <svg width="34" height="16" viewBox="0 0 34 16"><rect x="1" y="1" width="28" height="14" rx="4" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/><rect x="4" y="4" width="20" height="8" rx="2" fill="#fff"/><rect x="31" y="5" width="2.5" height="6" rx="1" fill="#fff" fill-opacity=".6"/></svg></div>
+   <div class="date">Monday 12 October</div><div class="clock">7:00</div>
+   <div id="pn"><div class="app"><img src="assets/logo-mark-black.png" alt=""><div class="an">Standout Daily</div><div class="tm">now</div></div>
+     <div class="pt">Your posts for today are ready</div><div class="pb"><span>2 high-signal posts</span>, written in your voice, backed by live insights.</div></div>
+   <div id="pn2"><div class="app" style="display:flex;align-items:center;gap:12px"><img src="assets/logo-mark-black.png" alt="" style="width:36px;height:36px;border-radius:9px">
+     <div style="font:600 18px/1.2 Inter;color:#111">Post 1 of 2 · Industry signal</div></div>
+     <div style="font:500 18px/1.35 Inter;color:#30343B;margin-top:8px">Why the best operators don’t just fix problems: they redesign systems.</div></div>
+  </div><div class="isl"></div>`);
+phone.id = "phone"; place(phone, 960, 300);
+const pn = $("#pn", phone), pn2 = $("#pn2", phone), pclock = $(".clock", phone), pdate = $(".date", phone);
+const wk = el("div", "abs", s5, "THIS WEEK", "left:150px;top:520px"); wk.id = "wk";
+const DAYX = [196, 300, 404, 508, 612], DAYY = 590, WEEK0 = 8.44;
+const days = ["M", "T", "W", "T", "F"].map((L, k) => {
+  const d = el("div", "abs day", s5, `<b>${L}</b><i><div class="fill"></div><svg width="76" height="76" viewBox="0 0 76 76"><path d="M24 39l9.5 9.5L53 29" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44" stroke-dashoffset="44"/></svg></i>`);
+  place(d, DAYX[k], DAYY);
+  return {e: d, fill: $(".fill", d), path: $("path", d), ring: $("i", d), k};
+});
+const sub5 = el("div", "abs sub", s5, mws("Lands in your inbox at 7am."), "left:150px;top:760px;font-size:28px");
+
+/* ================= build: 6 founder ================= */
+const s6 = el("div", "layer", stage);
+const willWrap = el("div", "abs", s6, "", "left:80px;top:39px;width:1100px;height:1085px");
+const willC = el("div", "", willWrap); willC.id = "willc";
+const willDot = el("div", "", willWrap); willDot.id = "willdot";
+const willImg = el("img", "", willWrap); willImg.id = "willimg"; willImg.src = "assets/will.png"; willImg.alt = "";
+const e6 = el("div", "abs eyebrow", s6, "HI, I’M WILL!", "left:1118px;top:350px");
+const t6 = el("div", "abs serif", s6, `<div>${mws("Built by an executive")}</div><div class="it">${mws("who’s been there.")}</div>`); t6.id = "t6";
+const sig6 = el("div", "abs", s6, mws("Will Bryant, founder of Standout"), "left:1120px;top:596px;font:500 26px/1 Inter;color:#3A3F47;white-space:nowrap");
+const mq = el("div", "abs", s6, `<div id="mqi"></div>`); mq.id = "mq";
+const mqi = $("#mqi", mq);
+mqi.innerHTML = Array(3).fill(`<span class="lf1">Wells Fargo</span><span class="lf2">QUANDOO</span><span class="lf3">FRESHA</span><span class="lf4">AMEX</span>`).join("");
+const mqCap = el("div", "abs", s6, "DIRECTOR, VP & C-LEVEL ROLES AT", "left:1120px;top:712px;font:600 17px/1 Inter;letter-spacing:.16em;color:#9AA1AD");
+
+/* ================= build: 7-8 finale ================= */
+const cob = el("div", "layer", stage); cob.id = "cob";
+const sheen = el("div", "abs", cob); sheen.id = "sheen";
+const edge = el("div", "abs", stage); edge.id = "edge";
+const s7 = el("div", "layer", stage);
+const tg1 = el("div", "abs serif tg", s7, mws("Show up before"));
+const tg2 = el("div", "abs serif tg it", s7, mws("opportunity knocks."));
+const krings = [0, 1, 2, 3].map(() => el("div", "abs kring", s7));
+const dev = el("div", "abs", s7, `<img src="assets/devices.png" alt="">`); dev.id = "dev"; place(dev, 1440, 560);
+const logo = el("div", "abs", s7); logo.id = "logo";
+const cta = el("div", "abs", s7, `<span class="lbl">Try Standout free for 7 days</span><span class="ar">→</span>`); cta.id = "cta";
+const ctaAr = $(".ar", cta);
+const ctaRip = el("div", "abs", s7); ctaRip.id = "ctaRip";
+const url = el("div", "abs", s7, `<b>joinstandout.com</b>`); url.id = "url";
+const cursor = el("div", "abs", s7, `<svg width="44" height="60" viewBox="0 0 44 60"><path d="M4 3 L4 47 L15 37 L23 55 L31 51 L23 34 L38 34 Z" fill="#fff" stroke="#0B1530" stroke-width="3" stroke-linejoin="round"/></svg>`);
+cursor.id = "cursor"; cursor.style.filter = "drop-shadow(0 8px 10px rgba(0,10,40,.35))";
+
+/* ================= build: global fx ================= */
+const fx = el("div", "layer", stage);
+const dot = el("div", "abs", stage); dot.id = "dot";
+const flash = el("div", "layer", stage); flash.id = "flash";
+el("div", "layer", stage).id = "grain";
+el("div", "layer", stage).id = "vig";
+
+/* ================= layout that needs measuring ================= */
+let G = null;                       // geometry from assets/geometry.json
+const M = {};                       // measured positions (stage px)
+function rectIn(e) {               // element rect in stage coordinates (stage must be unscaled)
+  const r = e.getBoundingClientRect(), s = stage.getBoundingClientRect();
+  return {x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height, cx: r.left - s.left + r.width / 2, cy: r.top - s.top + r.height / 2};
+}
+function measure() {
+  const keep = stage.style.transform; stage.style.transform = "none";
+  const per = rectIn($("#per", h2)), w7 = rectIn($$(".w", h2)[1]), h2r = rectIn(h2);
+  const words = $$(".w", h2).map(rectIn);
+  // italic period: centre of the ink sits low in the glyph box
+  M.per = {x: per.x + per.w * .42, y: per.y + per.h * .73, d: 19};
+  M.seven = w7;
+  const x0 = words[0].x - 10, x1 = words[2].x + words[2].w + 6, yb = words[0].y + words[0].h * .93;
+  M.swL = x1 - x0 + 40;
+  swp.setAttribute("d", `M ${x0} ${yb + 8} C ${x0 + (x1 - x0) * .3} ${yb - 4}, ${x0 + (x1 - x0) * .62} ${yb + 14}, ${x1} ${yb - 2}`);
+  swp.style.strokeDasharray = `${M.swL} ${M.swL}`;
+  M.tg1 = rectIn(tg1); M.tg2 = rectIn(tg2);
+  stage.style.transform = keep;
+}
+function buildLogo() {
+  const L = G.logo, s = .30, ox = L.mark[0], oy = L.mark[1];
+  const mark = el("img", "", logo); mark.src = "assets/logo-mark-white.png";
+  mark.style.cssText = `left:0;top:0;width:${L.mark[2] * s}px;height:${L.mark[3] * s}px`;
+  M.logoMark = mark;
+  M.logoLetters = L.letters.map(([x, w], i) => {
+    const im = el("img", "", logo); im.src = `assets/logo-l${i}.png`;
+    im.style.cssText = `left:${(x - ox) * s}px;top:${(L.band[0] - oy) * s}px;width:${w * s}px;height:${L.band[1] * s}px`;
+    return im;
+  });
+  M.logoRules = L.rules.map(([y, h]) => {
+    const r = el("div", "rule", logo);
+    r.style.cssText = `left:${(L.ruleX[0] - ox) * s}px;top:${(y - oy) * s}px;width:${(L.ruleX[1] - L.ruleX[0]) * s}px;height:${Math.max(2.4, h * s)}px`;
+    return r;
+  });
+}
+function buildWill() {
+  const W = G.will, [cx, cy, r] = W.circle, [dx, dy, dr] = W.dot;
+  willC.style.cssText = `left:${cx - r}px;top:${cy - r}px;width:${2 * r}px;height:${2 * r}px`;
+  willDot.style.cssText = `left:${dx - dr}px;top:${dy - dr}px;width:${2 * dr}px;height:${2 * dr}px;background:linear-gradient(100deg,${W.dotColors[0]} 0%,#0059C6 100%)`;
+  M.willC = {x: 80 + cx, y: 39 + cy, r}; M.willDot = {x: 80 + dx, y: 39 + dy, r: dr};
+}
+
+/* ================= cue sheet ================= */
+function buildCues() {
+  // 1 hook
+  cue(0.00, "whoosh", {d: .55, f0: 300, f1: 2600, g: .16, pan: 0});
+  cue(0.28, "whoosh", {d: .5, f0: 400, f1: 3200, g: .14, pan: 0});
+  cue(0.62, "plip", {f: 1046.5, g: .22});
+  cue(0.62, "sparkle", {g: .08});
+  cue(0.74, "swish", {d: .38, g: .14});
+  cue(1.40, "whoosh", {d: .47, f0: 2400, f1: 300, g: .16, pan: -.2});
+  cue(T.b2, "boop", {g: .24});
+  // 2 grid
+  cue(1.84, "shimmer", {d: .6, g: .10});
+  cue(2.30, "scan", {d: 1.05, g: .11});
+  cue(T.b3 - 2 * BEAT, "riser", {d: 2 * BEAT, g: .26});
+  cue(T.b3 - BEAT, "revcym", {d: BEAT, g: .18});
+  // 3 drop
+  cue(T.b3, "impact", {g: .9});
+  cue(T.b3 + BEAT / 2, "thump", {g: .35});
+  cue(4.12, "type", {d: .5, n: 15, g: .10});
+  heroChips.forEach((_, k) => cue(4.56 + k * .07, "boop", {g: .12, f0: 420 + k * 60, f1: 940 + k * 90}));
+  cue(T.b3 + 2 * BEAT, "ping", {f: NOTE.E6, g: .20}); cue(T.b3 + 2 * BEAT, "sparkle", {g: .09});
+  cue(T.b3 + 3 * BEAT, "ping", {f: NOTE.G6, g: .20}); cue(T.b3 + 3 * BEAT, "sparkle", {g: .09});
+  // 3 -> 4 whip
+  cue(T.b4 - .24, "whoosh", {d: .5, f0: 900, f1: 5200, g: .30, pan: .7, pan1: -.7});
+  // 4 score
+  cue(5.70, "counter", {d: .78, n: 20, g: .09});
+  cue(5.70, "sweep", {d: .78, g: .07});
+  cue(6.48, "ping", {f: NOTE.C6, g: .22}); cue(6.48, "sparkle", {g: .08});
+  gcks.forEach((_, k) => cue(6.58 + k * BEAT / 4, "check", {g: .13, k}));
+  TOOLS.forEach((_, k) => cue(6.62 + k * .09, "flick", {g: .12, k}));
+  // 4 -> 5 push
+  cue(T.b5 - .24, "whoosh", {d: .5, f0: 500, f1: 3600, g: .26, pan: 0});
+  // 5 daily
+  cue(7.80, "notify", {g: .24});
+  cue(8.06, "flick", {g: .10, k: 1});
+  days.forEach((_, k) => cue(WEEK0 + k * BEAT / 4, "ping", {f: [NOTE.C5, NOTE.D5, NOTE.E5, NOTE.G5, NOTE.C6][k], g: .17}));
+  cue(WEEK0 + 4 * BEAT / 4, "sparkle", {g: .1});
+  // 5 -> 6 circle match cut
+  cue(T.b6 - .30, "swell", {d: .38, g: .2});
+  cue(9.26, "whoosh", {d: .5, f0: 250, f1: 1400, g: .14, pan: -.3});
+  cue(9.62, "plip", {f: 784, g: .16});
+  // 6 -> 7 cobalt wipe
+  cue(T.b7 - .28, "whoosh", {d: .6, f0: 400, f1: 6000, g: .32, pan: -.8, pan1: .8});
+  // 7 knocks
+  cue(B(7, 2), "knock", {g: .55});
+  cue(B(7, 2.5), "knock", {g: .5});
+  cue(B(7, 3), "swell", {d: BEAT, g: .42});
+  // 8 end card
+  cue(T.b8, "impact", {g: .75, soft: 1});
+  cue(T.b8 + .05, "whoosh", {d: .55, f0: 300, f1: 2200, g: .14, pan: .5});
+  cue(13.22, "plip", {f: 523.25, g: .16});
+  M.logoLetters.forEach((_, k) => cue(T.b8 + .08 + .16 + k * .035, "tick", {g: .045, f: 2200 + k * 120}));
+  cue(13.78, "boop", {g: .16});
+  cue(14.40, "click", {g: .4});
+  cue(14.42, "sparkle", {g: .1});
+  cue(14.42, "chime", {g: .2});
+}
+
+/* ================= per-scene update ================= */
+function hookOut(t, i) { return tw(t, 1.36 + i * .03, .32, E.inX); }
+
+function upBg(t) {
+  const px = panX(t) * .14, py = panY(t) * .14;
+  for (const b of blobs) S(b.e, {x: b.x + px + Math.sin(t * b.f * 6.283 + b.ph) * b.ax, y: b.y + py + Math.cos(t * b.f * 5.1 + b.ph) * b.ay});
+}
+
+function up1(t) {
+  show(s1, t < 2.0);
+  if (t >= 2.0) return;
+  $$(".w", h1).forEach((w, i) => {
+    const pin = tw(t, i * .07, .8, E.outX);
+    S(w, {yp: (1 - pin) * 110 - hookOut(t, i) * 118, r: (1 - pin) * 5});
+  });
+  $$(".w", h2).forEach((w, i) => {
+    const pin = tw(t, .27 + i * .06, .8, E.outX);
+    const bmp = i === 1 ? .16 * bump(t - .94, 9) : 0;          // the "7" punches on beat 3
+    S(w, {yp: (1 - pin) * 110 - hookOut(t, i + 2) * 118, r: (1 - pin) * 5, s: 1 + bmp});
+  });
+  const ey = tw(t, .04, .9, E.outX), eyo = tw(t, 1.40, .3, E.in3);
+  hEy.style.letterSpacing = (.2 + .34 * (1 - ey)).toFixed(3) + "em";
+  S(hEy, {o: clamp(ey * 1.6) * (1 - eyo), y: -eyo * 40});
+  const din = tw(t, .74, .44, E.io3), dout = tw(t, 1.38, .3, E.in3);
+  swp.style.strokeDashoffset = (M.swL * (1 - din) - M.swL * dout).toFixed(1);
+}
+
+/* the cobalt dot: period -> avatar -> hero ring */
+const GRID_O = {x: 960, y: 610};
+const gridScale = t => t < T.b2 ? 1.3 : lerp(1.3, 1, tw(t, T.b2, .85)) + .05 * tw(t, T.b2 + .85, 1.0, E.ioS);
+function gridAvatar(t) { const g = gridScale(t); return {x: GRID_O.x, y: GRID_O.y - 70 * g, d: 92 * g}; }
+function heroState(t) {               // hero card spring from grid card to final spot
+  const sp = spring(t - T.b3, 1.55, .52), g0 = gridScale(T.b3);
+  const sc0 = 236 * g0 * .96 / 620;
+  return {x: lerp(960, 1270, sp), y: lerp(610, 560, sp), s: lerp(sc0, 1, sp), sp};
+}
+function panX(t) { return -1920 * tw(t, T.b4 - .26, .52, E.ioX); }
+function panY(t) { return -1080 * tw(t, T.b5 - .26, .52, E.ioX); }
+
+function upDot(t) {
+  let x, y, d, sx = 1, sy = 1, rot = 0, o = 1;
+  if (t < .62) { o = 0; x = M.per.x; y = M.per.y; d = M.per.d; }
+  else if (t < 1.42) {
+    x = M.per.x; y = M.per.y; d = M.per.d * spring(t - .62, 3.2, .38);
+    const b = bump(t - .94, 9) * .25; sx = sy = 1 + b;
+  } else if (t < T.b2) {
+    // anticipation, then an arcing flight with squash & stretch
+    const a = tw(t, 1.42, .1, E.out2) * (1 - tw(t, 1.52, .08, E.in2));
+    const u = E.io3(P(t, 1.5, T.b2 - 1.5));
+    const tgt = gridAvatar(T.b2);
+    const cx = (M.per.x + tgt.x) / 2 + 60, cy = Math.min(M.per.y, tgt.y) - 240;
+    x = bez(M.per.x, cx, tgt.x, u); y = bez(M.per.y, cy, tgt.y, u) + a * 10;
+    d = lerp(M.per.d, tgt.d, E.in2(u));
+    const u2 = Math.min(1, u + .02), vx = bez(M.per.x, cx, tgt.x, u2) - x, vy = bez(M.per.y, cy, tgt.y, u2) - y;
+    const sp = Math.min(1, Math.hypot(vx, vy) / 22);
+    rot = Math.atan2(vy, vx) * 180 / Math.PI;
+    sx = 1 + .55 * sp; sy = 1 / Math.sqrt(sx);
+    if (a > 0 && u === 0) { sx = 1 + .18 * a; sy = 1 - .18 * a; rot = 0; }
+  } else if (t < T.b3) {
+    const ga = gridAvatar(t);
+    x = ga.x; y = ga.y; d = ga.d;
+    const land = wob(t - T.b2, 3.2, 7);                      // landing squash
+    sx = 1 + .22 * land; sy = 1 - .22 * land;
+    let pulse = 0;
+    for (let k = 1; k < 8; k++) pulse += .07 * bump(t - (T.b2 + k * BEAT / (k > 5 ? 2 : 1)), 14);
+    pulse += .12 * tw(t, T.b3 - BEAT, BEAT, E.in3);          // swell into the drop
+    d *= 1 + pulse;
+  } else if (t < 4.06) {
+    const ga = gridAvatar(T.b3), h = heroState(t), e = tw(t, T.b3, .31, E.io3);
+    const rx = h.x + (126 - 310) * h.s, ry = h.y + (156 - 300) * h.s;
+    x = lerp(ga.x, rx, e) + panX(t); y = lerp(ga.y, ry, e); d = lerp(ga.d * 1.12, 180 * h.s, e);
+    const st = wob(t - T.b3, 4, 9); sx = 1 - .2 * st; sy = 1 + .2 * st;
+  } else { o = 0; x = y = 0; d = 1; }
+  S(dot, {x, y, r: rot, sx: sx * d / 100, sy: sy * d / 100, o});
+}
+
+function up2(t) {
+  const vis = t > 1.7 && t < 4.6;
+  show(s2, vis);
+  if (!vis) return;
+  const g = gridScale(t);
+  S(grid, {s: g});
+  const beamX = lerp(-300, 2220, tw(t, 2.30, 1.05, E.ioS));
+  const shake = tw(t, T.b3 - BEAT, BEAT, E.in2);
+  for (const c of cards) {
+    const del = 1.78 + c.d * .065;
+    const p = P(t, del, .6);
+    let x = 0, y = (1 - E.out3(p)) * 46, s = .72 + .28 * E.outB(p, 1.4), o = E.out2(P(t, del, .22)), r = 0;
+    const sxp = GRID_O.x + (c.cx - GRID_O.x) * g;
+    const dx = beamX - sxp, hl = clamp(1 - Math.abs(dx) / 150) * (t < 3.4 ? 1 : 0);
+    S(c.hl, {o: hl * .8});
+    if (!c.center) {
+      const dim = clamp((dx - 60) / 160);
+      o *= 1 - .42 * dim;
+      x += (rnd(c.i * 13 + c.j) - .5) * 5 * shake * Math.sin(t * 90 + c.i);
+      y += (rnd(c.i * 7 + c.j * 3) - .5) * 5 * shake * Math.cos(t * 80 + c.j);
+      if (t >= T.b3) {                                        // blast away from the hero card
+        const q = tw(t, T.b3, .62, E.out3), vx = c.cx - GRID_O.x, vy = c.cy - GRID_O.y, L = Math.hypot(vx, vy) || 1;
+        const dist = 380 + 140 * c.d;
+        x += vx / L * dist * q; y += vy / L * dist * q; r = (rnd(c.i + c.j * 9) - .5) * 50 * q;
+        s *= 1 - .25 * q; o *= 1 - tw(t, T.b3 + .04, .4, E.in2);
+      }
+    } else {
+      s *= 1 - .05 * shake;
+      if (t >= T.b3) o = 0;
+    }
+    S(c.e, {x, y, s, r, o});
+  }
+  S(scan, {x: beamX, o: tw(t, 2.28, .12) * (1 - tw(t, 3.3, .12))});
+  // headline
+  const ws = $$(".w", t2), wout = tw(t, T.b3 - .3, .26, E.inX);
+  ws.forEach((w, i) => { const pin = tw(t, 1.96 + i * .06, .75, E.outX); S(w, {yp: (1 - pin) * 110 - wout * 118, r: (1 - pin) * 4}); });
+  S(fade2, {o: tw(t, 1.9, .3) * (1 - tw(t, T.b3, .2))});
+}
+
+function up3(t) {
+  const vis = t > T.b3 - .05 && t < T.b5 + .4;
+  show(pan, vis);
+  if (!vis) return;
+  S(pan, {x: panX(t), y: panY(t)});
+  // shockwave rings
+  const q1 = P(t, T.b3, .75), q2 = P(t, T.b3 + .08, .8), ga = gridAvatar(T.b3);
+  S(r1, {x: ga.x, y: ga.y, s: .4 + 9 * E.out3(q1), o: (q1 > 0 && q1 < 1) ? .55 * (1 - q1) : 0});
+  S(r2, {x: ga.x, y: ga.y, s: .4 + 6.5 * E.out3(q2), o: (q2 > 0 && q2 < 1) ? .35 * (1 - q2) : 0});
+  S(glow3, {o: tw(t, T.b3, .5), s: .8 + .2 * tw(t, T.b3, 1)});
+  // hero card
+  const h = heroState(t);
+  const fl3 = Math.sin((t - T.b3) * 1.9) * 5 * tw(t, 4.2, .6);
+  S(hero, {x: h.x, y: h.y + fl3, o: t >= T.b3 ? 1 : 0, s: h.s, pz: 1600, ry: (1 - h.sp) * -26, rx: (1 - h.sp) * 9});
+  const ringOn = t >= 4.06;
+  S(heroRing, {o: ringOn ? 1 : 0});
+  const pr = tw(t, 4.02, .36, E.out3);
+  S(heroPh, {clip: `circle(${(pr * 52).toFixed(2)}% at 50% 50%)`, o: pr > 0 ? 1 : 0});
+  // headline rewrite
+  const before = "Operations Manager", after = "Fractional COO | Scaling B2B businesses";
+  const sel = t > 3.98 && t < 4.12, ty = P(t, 4.12, .5);
+  const txt = t < 4.12 ? before : after.slice(0, Math.round(after.length * ty));
+  if (hlText._t !== txt) { hlText.textContent = txt; hlText._t = txt; }
+  const selBg = sel ? `rgba(0,70,218,${(.22 * tw(t, 3.98, .06)).toFixed(3)})` : "transparent";
+  if (hlText._b !== selBg) { hlText.style.background = selBg; hlText._b = selBg; }
+  hlText.style.color = t < 4.12 ? "#8A93A3" : "#1F2329";
+  const blink = t < 4.12 || t > 4.62 ? (Math.floor((t - 4.62) / .26) % 2 === 0 ? 1 : 0) : 1;
+  S(caret, {o: t > 3.9 && t < 5.4 ? blink : 0});
+  heroChips.forEach((c, k) => { const sp = spring(t - (4.56 + k * .07), 3.2, .45); S(c, {s: sp, o: clamp(sp * 3)}); });
+  S(heroAbout, {o: tw(t, 4.3, .3), y: (1 - tw(t, 4.3, .4)) * 12});
+  // headline type
+  const slam = (e, t0) => { const p = P(t, t0, .26); S(e, {s: 1.3 - .3 * E.out3(p) + .025 * wob(t - t0 - .2, 5, 8), o: E.out2(P(t, t0, .08))}); };
+  slam(stand, T.b3); slam(out3, T.b3 + BEAT / 2);
+  $$(".w", sub3).forEach((w, i) => { const pin = tw(t, 4.18 + i * .03, .7, E.outX); S(w, {yp: (1 - pin) * 110}); });
+  // notifications
+  const pop = (e, t0, N, from) => {
+    const sp = spring(t - t0, 2.4, .5);
+    const fy = Math.sin((t - t0) * 2.1 + N.x) * 5 * clamp((t - t0) * 2);
+    S(e, {x: lerp(from.x, 0, sp), y: lerp(from.y, 0, sp) + fy, s: lerp(.55, 1, sp), r: lerp(from.r, N.r, sp), o: clamp((t - t0) / .08)});
+  };
+  pop(n1, T.b3 + 2 * BEAT, N1, {x: 60, y: -40, r: -14});
+  pop(n2, T.b3 + 3 * BEAT, N2, {x: -60, y: 50, r: 12});
+  up4(t);
+}
+
+function up4(t) {
+  const t0 = T.b4;
+  $$(".w", t4a).concat($$(".w", t4b)).forEach((w, i) => { const pin = tw(t, t0 - .02 + i * .06, .8, E.outX); S(w, {yp: (1 - pin) * 110, r: (1 - pin) * 4}); });
+  S(t4e, {o: tw(t, t0, .3), x: (1 - tw(t, t0, .6, E.outX)) * -30});
+  $$(".w", sub4).forEach((w, i) => { const pin = tw(t, t0 + .3 + i * .03, .7, E.outX); S(w, {yp: (1 - pin) * 110}); });
+  // score card float-in
+  const sc = spring(t - (t0 - .05), 1.8, .62);
+  S(score, {y: (1 - sc) * 90, s: .9 + .1 * sc, r: (1 - sc) * 4});
+  const g = tw(t, 5.70, .78, E.out4), v = 92 * g;
+  garc.setAttribute("stroke-dasharray", `${(706.86 * v / 100).toFixed(2)} 942.48`);
+  const ang = (135 + 270 * v / 100) * Math.PI / 180;
+  gknob.setAttribute("cx", (175 + 150 * Math.cos(ang)).toFixed(2)); gknob.setAttribute("cy", (175 + 150 * Math.sin(ang)).toFixed(2));
+  S(gknob, {o: g > .01 ? 1 : 0});
+  const n = String(Math.round(v)); if (gnum._t !== n) { gnum.textContent = n; gnum._t = n; }
+  const ex = spring(t - 6.48, 3, .42); S(gex, {s: ex, o: clamp(ex * 4)});
+  gcks.forEach((c, k) => {
+    const tk = 6.58 + k * BEAT / 4, sp = spring(t - tk, 3.4, .5);
+    S($("i", c), {s: sp}); $("path", c).style.strokeDashoffset = (16 * (1 - tw(t, tk + .05, .2))).toFixed(2);
+    S(c, {o: clamp((t - tk) / .1)});
+  });
+  for (const T4 of TOOLS) {
+    const tk = 6.62 + T4.k * .09, sp = spring(t - tk, 2.1, .55);
+    const dx = (X4 + 1322) - (X4 + T4.x), dy = 568 - T4.y;
+    const fy = Math.sin((t - tk) * 2.0 + T4.k * 1.7) * 6 * clamp((t - tk) * 2);
+    S(T4.e, {x: dx * (1 - sp), y: dy * (1 - sp) + fy, r: T4.r * sp, s: .55 + .45 * sp, o: clamp((t - tk) / .06)});
+  }
+}
+
+function up5(t) {
+  const vis = t > T.b5 - .4 && t < T.b6 + .35;
+  show(s5, vis);
+  if (!vis) return;
+  const enter = 1080 + panY(t);                       // rides up with the vertical push
+  const out = tw(t, 8.98, .36, E.in3);
+  S(s5, {y: enter});
+  $$(".w", t5).forEach((w, i) => { const pin = tw(t, T.b5 - .06 + i * .045, .8, E.outX); S(w, {yp: (1 - pin) * 110 - out * 118, r: (1 - pin) * 4}); });
+  // phone rises, clock ticks over to 7:00
+  const ph = spring(t - (T.b5 - .12), 1.5, .62);
+  S(phone, {y: (1 - ph) * 380 + out * 900 + Math.sin(t * 1.7) * 6, r: -2.5 + (1 - ph) * 6 + out * 6, pz: 2200, ry: -9 + 9 * (1 - ph) + 2.5 * Math.sin(t * 1.1)});
+  const clk = t < 7.72 ? "6:59" : "7:00"; if (pclock._t !== clk) { pclock.textContent = clk; pclock._t = clk; }
+  S(pclock, {s: 1 + .05 * bump(t - 7.72, 12)});
+  const nn = spring(t - 7.80, 2.6, .55);
+  S(pn, {y: (1 - nn) * -170, s: .85 + .15 * nn, o: clamp((t - 7.8) / .1)});
+  const nn2 = spring(t - 8.06, 2.6, .58);
+  S(pn2, {y: (1 - nn2) * -120, s: .9 + .1 * nn2, o: clamp((t - 8.06) / .1) * .97});
+  // daily card + week ticks
+  const dc = spring(t - (T.b5 + .05), 1.7, .6);
+  S(dailyc, {x: (1 - dc) * 520 + out * 900, y: Math.sin(t * 1.9 + 1) * 6, r: 3 + (1 - dc) * 10, o: clamp((t - T.b5) / .12)});
+  S(wk, {o: tw(t, T.b5 + .1, .3) * (1 - out), x: (1 - tw(t, T.b5 + .1, .6, E.outX)) * -30});
+  $$(".w", sub5).forEach((w, i) => { const pin = tw(t, T.b5 + .35 + i * .03, .7, E.outX); S(w, {yp: (1 - pin) * 110 - out * 118}); });
+  for (const d of days) {
+    const din = spring(t - (T.b5 + .12 + d.k * .05), 2.4, .6);
+    const tk = WEEK0 + d.k * BEAT / 4, f = spring(t - tk, 3.4, .45);
+    S(d.fill, {s: f});
+    d.path.style.strokeDashoffset = (44 * (1 - tw(t, tk + .04, .2))).toFixed(2);
+    const isF = d.k === 4;
+    let o = clamp(din * 2) * (isF ? (t < 9.03 ? 1 : 0) : 1 - out), y = (1 - din) * 40 - (isF ? 0 : out * 60);
+    S(d.e, {y, o});
+    if (isF) {
+      const fr = ($("b", d.e)); S(fr, {o: 1 - out});
+      S(d.ring, {s: 1 + .12 * bump(t - tk, 12)});
+    }
+  }
+}
+
+function up6(t) {
+  const vis = t > T.b6 - .4 && t < T.b7 + .45;
+  show(s6, vis);
+  if (!vis) return;
+  // circle match-cut: the Friday tick grows into Will's backdrop
+  const F = {x: DAYX[4], y: DAYY + 40 + 38}, C = M.willC;
+  const m = tw(t, 9.02, .52, E.io5);
+  const cx = lerp(F.x, C.x, m), cy = lerp(F.y + 1080 + panY(t), C.y, m), r = lerp(38, C.r, m);
+  const a = lerp(1, .12, tw(t, 9.16, .4));
+  S(willC, {o: t > 9.0 ? 1 : 0, x: cx - C.x, y: cy - C.y, s: r / C.r, bg: `rgba(0,${Math.round(lerp(70, 100, m))},${Math.round(lerp(218, 219, m))},${a.toFixed(3)})`});
+  const wipeOut = t > T.b7 - .3 ? tw(t, T.b7 - .3, .5, E.inX) : 0;
+  const rise = spring(t - 9.30, 1.6, .7);
+  S(willImg, {y: (1 - rise) * 560, o: clamp((t - 9.30) / .08)});
+  const dp = spring(t - 9.62, 3, .45); S(willDot, {s: dp});
+  S(e6, {o: tw(t, T.b6 + .1, .25), x: (1 - tw(t, T.b6 + .1, .6, E.outX)) * -26});
+  $$(".w", t6).forEach((w, i) => { const pin = tw(t, T.b6 + .14 + i * .05, .8, E.outX); S(w, {yp: (1 - pin) * 110, r: (1 - pin) * 4}); });
+  $$(".w", sig6).forEach((w, i) => { const pin = tw(t, T.b6 + .55 + i * .03, .7, E.outX); S(w, {yp: (1 - pin) * 110}); });
+  S(mqCap, {o: tw(t, T.b6 + .6, .3)});
+  S(mqi, {x: 60 - (t - T.b6) * 220, o: tw(t, T.b6 + .6, .35)});
+  S(willWrap, {x: wipeOut * 260});
+}
+
+function up7(t) {
+  const vis = t > T.b7 - .45;
+  show(cob, vis); show(s7, vis); show(edge, vis);
+  if (!vis) return;
+  // diagonal cobalt wipe with a bright leading edge
+  const wp = tw(t, T.b7 - .3, .52, E.io3);
+  const xr = lerp(-500, 2500, wp);
+  S(cob, {clip: `polygon(0 0, ${(xr + 260).toFixed(1)}px 0, ${(xr - 260).toFixed(1)}px 1080px, 0 1080px)`});
+  S(edge, {x: xr, y: 540, r: 25.7, o: wp > 0 && wp < 1 ? .9 : 0});
+  S(sheen, {x: lerp(-300, 2300, P(t, T.b7, 3.8)), y: 540, r: 20});
+  // tagline (centered, then FLIP to the end card column)
+  const W1 = M.tg1.w, W2 = M.tg2.w, H1 = M.tg1.h;
+  const fl = tw(t, T.b8 - .16, .62, E.io5), ks = lerp(1, .52, fl);
+  const k1 = wob(t - B(7, 2), 22, 18) + wob(t - B(7, 2.5), 22, 18);
+  const ky = bump(t - B(7, 2), 30) + bump(t - B(7, 2.5), 30);
+  const cx1 = (1920 - W1) / 2, cx2 = (1920 - W2) / 2;
+  S(tg1, {x: lerp(cx1, 140, fl) + k1 * 7, y: lerp(332, 386, fl) + ky * 3, s: ks});
+  S(tg2, {x: lerp(cx2, 140, fl) + k1 * 9, y: lerp(332 + H1 * .98, 386 + H1 * .98 * .52, fl) + ky * 4, s: ks});
+  $$(".w", tg1).forEach((w, i) => { const pin = tw(t, T.b7 - .02 + i * .07, .85, E.outX); S(w, {yp: (1 - pin) * 112, r: (1 - pin) * 5}); });
+  $$(".w", tg2).forEach((w, i) => { const pin = tw(t, T.b7 + .2 + i * .08, .85, E.outX); S(w, {yp: (1 - pin) * 112, r: (1 - pin) * 5}); });
+  // knock ripples from the end of "knocks."
+  const kx = cx2 + W2 + 96, ky0 = 332 + H1 * .98 + H1 * .52;
+  krings.forEach((rg, i) => {
+    const t0 = B(7, 2 + .5 * (i >> 1)) + (i & 1) * .07, q = P(t, t0, .5);
+    S(rg, {x: kx, y: ky0, s: .3 + 2.6 * E.out3(q), o: q > 0 && q < 1 ? .7 * (1 - q) * (1 - fl) : 0});
+  });
+  // logo
+  const L0 = T.b8 + .08;
+  const mk = spring(t - L0, 2.6, .48);
+  S(M.logoMark, {s: mk, r: (1 - mk) * -16, o: clamp((t - L0) / .05)});
+  M.logoLetters.forEach((im, i) => {
+    const p = tw(t, L0 + .16 + i * .035, .55, E.outX), gl = bump(t - (14.5 + i * .04), 12);
+    S(im, {x: (1 - p) * -24, o: p, f: `blur(${((1 - p) * 6).toFixed(2)}px) drop-shadow(0 0 ${(12 * gl).toFixed(1)}px rgba(220,235,255,${(.95 * gl).toFixed(2)}))`});
+  });
+  M.logoRules.forEach((r, i) => S(r, {sx: tw(t, L0 + .12 + i * .05, .6, E.outX), o: 1}));
+  S(logo, {o: t >= L0 ? 1 : 0});
+  // devices fly in
+  const dv = spring(t - (T.b8 + .1), 1.5, .62);
+  S(dev, {x: (1 - dv) * 560, y: (1 - dv) * 60 + Math.sin(t * 2.2) * 6 * dv, r: (1 - dv) * 8, o: clamp((t - T.b8 - .1) / .1)});
+  // CTA + url
+  const cp = spring(t - 13.78, 2.6, .5);
+  const press = bump(t - 14.40, 22);
+  S(cta, {s: cp * (1 - .06 * press), o: clamp((t - 13.78) / .06)});
+  S(ctaAr, {x: 8 * bump(t - 14.44, 9) + 5 * Math.max(0, Math.sin((t - 14.6) * 9)) * (t > 14.6 ? 1 : 0)});
+  const cr = rectCTA();
+  const tx = cr.x + cr.w - 58, ty = cr.y + cr.h * .58;
+  const rp = P(t, 14.40, .55);
+  S(ctaRip, {x: tx, y: ty, s: .2 + 3.2 * E.out3(rp), o: rp > 0 && rp < 1 ? .5 * (1 - rp) : 0});
+  $$(".w", url).forEach(w => { const pin = tw(t, 13.95, .7, E.outX); S(w, {yp: (1 - pin) * 110}); });
+  S(url, {o: t > 13.9 ? 1 : 0});
+  // cursor glides in and clicks
+  const cu = tw(t, 13.98, .44, E.io3), aw = tw(t, 14.62, .5, E.io3);
+  S(cursor, {x: bez(1180, 1060, tx, cu) + aw * 46, y: bez(1120, 900, ty, cu) + aw * 58, s: 1 - .14 * press, o: clamp((t - 13.98) / .1)});
+}
+let _cr = null;
+function rectCTA() { return _cr || (_cr = {x: 140, y: 676, w: cta.offsetWidth, h: 88}); }
+
+function upFx(t) {
+  const fl = .55 * Math.exp(-(t - T.b3) * 14) * (t >= T.b3 ? 1 : 0) + .35 * Math.exp(-(t - T.b8) * 12) * (t >= T.b8 ? 1 : 0);
+  S(flash, {o: fl});
+  // camera shake on the two impacts + knocks
+  const sh = wob(t - T.b3, 11, 9) * 9 + wob(t - T.b8, 10, 10) * 5;
+  const sv = wob(t - T.b3 - .03, 13, 9) * 6 + wob(t - T.b8 - .02, 12, 10) * 4;
+  stage._shake = {x: sh, y: sv};
+  updBursts(t);
+}
+
+/* ================= master render ================= */
+let fitScale = 1;
+function renderAt(t) {
+  t = clamp(t, 0, DUR);
+  upBg(t); up2(t); up1(t); up3(t); up5(t); up6(t); up7(t); upDot(t); upFx(t);
+  const sh = stage._shake || {x: 0, y: 0};
+  stage.style.transform = `scale(${fitScale}) translate(${f2(sh.x)}px,${f2(sh.y)}px)`;
+}
+
+/* ================= boot ================= */
+async function boot() {
+  G = window.GEOMETRY;
+  buildLogo(); buildWill();
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(im => im.decode().catch(() => {})));
+  measure();
+  // sparkle bursts (pan coordinates for 3/4, stage coordinates otherwise)
+  burst(fx, M.per.x, M.per.y, .62, {n: 8, dist: 60, color: "#0046DA", seed: 3, size: .8});
+  burst(pan, N1.x - 200, N1.y - 40, T.b3 + 2 * BEAT, {n: 10, dist: 110, color: "#fff", seed: 11});
+  burst(pan, N1.x - 200, N1.y - 40, T.b3 + 2 * BEAT + .02, {n: 8, dist: 80, color: "#0046DA", seed: 17, size: .7});
+  burst(pan, N2.x - 200, N2.y - 40, T.b3 + 3 * BEAT, {n: 10, dist: 110, color: "#fff", seed: 23});
+  burst(pan, X4 + 1322 + 90, 568 + 126, 6.48, {n: 10, dist: 120, color: "#22A045", seed: 31, size: .8});
+  burst(s5, DAYX[4], DAYY + 78, WEEK0 + 4 * BEAT / 4, {n: 10, dist: 90, color: "#0046DA", seed: 41, size: .8});
+  burst(s7, 140 + cta.offsetWidth - 58, 676 + 51, 14.42, {n: 12, dist: 150, color: "#fff", seed: 51});
+  buildCues();
+  window.CUES = CUES.sort((a, b) => a.t - b.t);
+  window.renderAt = renderAt;
+  window.META = {DUR, BPM, BEAT, BAR, bars: T};
+  renderAt(0);
+  window.__ready = true;
+  if (!RENDER) preview();
+}
+
+/* ================= preview player ================= */
+function preview() {
+  const snd = $("#snd"), pp = $("#pp"), seek = $("#seek"), tc = $("#tc"), big = $("#big");
+  const fit = () => { fitScale = Math.min(innerWidth / 1920, innerHeight / 1080); renderAt(cur()); };
+  let playing = false, t0 = 0, tStart = 0, hasAudio = true;
+  snd.addEventListener("error", () => hasAudio = false);
+  const cur = () => playing ? (hasAudio && !snd.paused ? snd.currentTime : (performance.now() - t0) / 1000 + tStart) : tStart;
+  function play() {
+    if (tStart >= DUR - .01) tStart = 0;
+    playing = true; big.style.display = "none"; pp.textContent = "Pause";
+    t0 = performance.now();
+    if (hasAudio) { snd.currentTime = tStart; snd.play().catch(() => hasAudio = false); }
+  }
+  function pause() { tStart = cur(); playing = false; snd.pause(); pp.textContent = "Play"; }
+  pp.onclick = () => playing ? pause() : play();
+  big.onclick = play;
+  seek.oninput = () => { const v = seek.value / 1000; if (playing) pause(); tStart = v; renderAt(v); };
+  addEventListener("keydown", e => {
+    if (e.code === "Space") { e.preventDefault(); playing ? pause() : play(); }
+    if (e.code === "ArrowRight" || e.code === "ArrowLeft") { if (playing) pause(); tStart = clamp(tStart + (e.code === "ArrowRight" ? 1 / 60 : -1 / 60), 0, DUR); renderAt(tStart); }
+  });
+  addEventListener("resize", fit); fit();
+  (function loop() {
+    const t = cur();
+    if (playing && t >= DUR) { pause(); tStart = DUR; }
+    renderAt(Math.min(t, DUR));
+    seek.value = Math.round(Math.min(t, DUR) * 1000);
+    tc.textContent = `${Math.min(t, DUR).toFixed(2)} / ${DUR.toFixed(2)}`;
+    requestAnimationFrame(loop);
+  })();
+}
+boot();
+})();
+</script>
+</body>
+</html>
